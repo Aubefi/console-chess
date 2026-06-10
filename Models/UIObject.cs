@@ -2,7 +2,7 @@ using System;
 
 namespace Chess.Models;
 
-public abstract class UIObject(char symbol, ConsoleColor color, byte x, byte y)
+public abstract class BaseUIObject(char symbol, ConsoleColor color, byte x, byte y)
 {
     public char Symbol { get; protected set; } = symbol;
 

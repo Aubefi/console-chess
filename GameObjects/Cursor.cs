@@ -19,7 +19,7 @@ public class Cursor : BaseUIObject
         if (IsHoldingPiece)
         {
             IsHoldingPiece = false;
-            BackgroundColor = ConsoleColor.Blue;
+            BackgroundColor = ConsoleColor.DarkBlue;
         }
         else if (piece is not EmptySquare)
         {

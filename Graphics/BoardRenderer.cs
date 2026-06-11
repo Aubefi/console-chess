@@ -5,7 +5,48 @@ namespace Chess.Graphics;
 
 public class BoardRenderer
 {
-    public static void RenderBoard(BaseUIObject[,] gridObjects, Cursor cursor)
+    public required BaseUIObject[,] GridObjects;
+    public required Cursor Cursor;
+
+    private Position _lastCursorPos;
+    private bool _isFirstRender = true;
+
+    public BoardRenderer()
+    {
+        _lastCursorPos = new Position(0, 0);
+    }
+
+    public void RenderBoard()
+    {
+        if (_isFirstRender)
+        {
+            RenderFullBoard();
+            _isFirstRender = false;
+            _lastCursorPos = Cursor.Coordinates;
+            return;
+        }
+
+        if (Cursor.Coordinates != _lastCursorPos)
+        {
+            Console.SetCursorPosition(_lastCursorPos.X * 3, _lastCursorPos.Y);
+
+            Console.ResetColor();
+            Console.ForegroundColor = GridObjects[_lastCursorPos.Y, _lastCursorPos.X].Color;
+            Console.Write($" {GridObjects[_lastCursorPos.Y, _lastCursorPos.X].Symbol} ");
+
+            Console.SetCursorPosition(Cursor.Coordinates.X * 3, Cursor.Coordinates.Y);
+
+            Console.BackgroundColor = Cursor.BackgroundColor;
+            Cursor.SetSymbol(GridObjects[Cursor.Coordinates.Y, Cursor.Coordinates.X].Symbol);
+            Console.Write($" {Cursor.Symbol} ");
+
+            Console.ResetColor();
+
+            _lastCursorPos = Cursor.Coordinates;
+        }
+    }
+
+    public void RenderFullBoard()
     {
         Console.SetCursorPosition(0, 0);
 
@@ -13,19 +54,17 @@ public class BoardRenderer
         {
             for (byte j = 0; j < 8; j++)
             {
-                Console.ForegroundColor = gridObjects[i, j].Color;
-
-                if (i == cursor.Coordinates.Y && j == cursor.Coordinates.X)
+                if (i == Cursor.Coordinates.Y && j == Cursor.Coordinates.X)
                 {
-                    Console.BackgroundColor = ConsoleColor.Blue;
-                    cursor.SetSymbol(gridObjects[i, j].Symbol);
-                    Console.Write($" {cursor.Symbol} ");
+                    Console.BackgroundColor = Cursor.BackgroundColor;
+                    Cursor.SetSymbol(GridObjects[i, j].Symbol);
+                    Console.Write($" {Cursor.Symbol} ");
                 }
                 else
                 {
-                    Console.Write($" {gridObjects[i, j].Symbol} ");
+                    Console.ForegroundColor = GridObjects[i, j].Color;
+                    Console.Write($" {GridObjects[i, j].Symbol} ");
                 }
-
                 Console.ResetColor();
             }
             Console.Write("\n");

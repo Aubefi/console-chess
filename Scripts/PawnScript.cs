@@ -3,7 +3,7 @@ using Chess.Objects;
 
 namespace Chess.Scripts;
 
-public class PawnMoveset()
+public class PawnScript()
 {
     public static void MovePawn(Pawn pawn, Position targetPos)
     {

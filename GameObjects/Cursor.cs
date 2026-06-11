@@ -12,7 +12,7 @@ public class Cursor : BaseUIObject
 
     public bool IsHoldingPiece { get; set; }
 
-    public ConsoleColor BackgroundColor { get; set; } = ConsoleColor.Blue;
+    public ConsoleColor BackgroundColor { get; set; } = ConsoleColor.DarkBlue;
 
     private void OnPlayerSelectedPieceEvent(BaseUIObject piece)
     {
@@ -24,7 +24,7 @@ public class Cursor : BaseUIObject
         else if (piece is not EmptySquare)
         {
             Symbol = piece.Symbol;
-            BackgroundColor = ConsoleColor.Yellow;
+            BackgroundColor = ConsoleColor.DarkYellow;
             IsHoldingPiece = true;
         }
     }

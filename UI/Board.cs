@@ -30,19 +30,30 @@ public class Board : BaseBehavior
             PiecesEnum.Rook, PiecesEnum.Knight, PiecesEnum.Bishop, PiecesEnum.Queen,
             PiecesEnum.King, PiecesEnum.Bishop, PiecesEnum.Knight, PiecesEnum.Rook];
 
+        var symbols = Symbols.BoardSymbols;
+
         for (byte i = 0; i < 8; i++)
         {
             // Black pieces
-            GridObjects[0, i] = CreatePiece(backOrder[i], Symbols.BlackSymbols[backOrder[i]], ConsoleColor.Gray, 0, i);
+            GridObjects[0, i] = CreatePiece(backOrder[i], symbols[backOrder[i]], ConsoleColor.Gray, i, 0);
 
             // Black pawns
-            GridObjects[1, i] = CreatePiece(PiecesEnum.Pawn, Symbols.BlackSymbols[PiecesEnum.Pawn], ConsoleColor.Gray, 1, i);
+            GridObjects[1, i] = CreatePiece(PiecesEnum.Pawn, symbols[PiecesEnum.Pawn], ConsoleColor.Gray, i, 1);
 
             // White pawns
-            GridObjects[6, i] = CreatePiece(PiecesEnum.Pawn, Symbols.WhiteSymbols[PiecesEnum.Pawn], ConsoleColor.White, 6, i);
+            GridObjects[6, i] = CreatePiece(PiecesEnum.Pawn, symbols[PiecesEnum.Pawn], ConsoleColor.White, i, 6);
 
             // White pieces
-            GridObjects[7, i] = CreatePiece(backOrder[i], Symbols.WhiteSymbols[backOrder[i]], ConsoleColor.White, 7, i);
+            GridObjects[7, i] = CreatePiece(backOrder[i], symbols[backOrder[i]], ConsoleColor.White, i, 7);
+        }
+
+        for (byte i = 2; i < 6; i++)
+        {
+            for (byte j = 0; j < 8; j++)
+            {
+                GridObjects[i, j] ??=
+                    CreatePiece(PiecesEnum.EmptySquare, symbols[PiecesEnum.EmptySquare], ConsoleColor.White, j, i);
+            }
         }
     }
 
@@ -55,12 +66,8 @@ public class Board : BaseBehavior
             PiecesEnum.Rook => new Rook(symbol, color, x, y),
             PiecesEnum.Knight => new Knight(symbol, color, x, y),
             PiecesEnum.Bishop => new Bishop(symbol, color, x, y),
-            _ => new Pawn(symbol, color, x, y)
+            PiecesEnum.Pawn => new Pawn(symbol, color, x, y),
+            _ => new EmptySquare(symbol, color, x, y)
         };
-    }
-
-    public BaseUIObject GetPieceByCoordinates(Position pos)
-    {
-        return GridObjects[pos.X, pos.Y];
     }
 }

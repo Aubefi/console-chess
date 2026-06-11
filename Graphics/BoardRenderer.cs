@@ -13,35 +13,17 @@ public class BoardRenderer
         {
             for (byte j = 0; j < 8; j++)
             {
-                var onCursorPosition = (cursor.Coordinates.X == j) && (cursor.Coordinates.Y == i);
+                Console.ForegroundColor = gridObjects[i, j].Color;
 
-                if (onCursorPosition) Console.BackgroundColor = ConsoleColor.Blue;
-
-                if (gridObjects[i, j] is not null)
+                if (i == cursor.Coordinates.Y && j == cursor.Coordinates.X)
                 {
-                    Console.ForegroundColor = gridObjects[i, j].Color;
-
-                    if (onCursorPosition)
-                    {
-                        Console.ForegroundColor = gridObjects[i, j].Color is ConsoleColor.White
-                            ? ConsoleColor.White
-                            : ConsoleColor.Black;
-                        cursor.SetSymbol(gridObjects[i, j].Symbol);
-                    }
-
-                    Console.Write($" {gridObjects[i, j].Symbol} ");
+                    Console.BackgroundColor = ConsoleColor.Blue;
+                    cursor.SetSymbol(gridObjects[i, j].Symbol);
+                    Console.Write($" {cursor.Symbol} ");
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.White;
-
-                    if (onCursorPosition)
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkBlue;
-                        cursor.SetSymbol('\u00B7');
-                    }
-
-                    Console.Write(" \u00B7 ");
+                    Console.Write($" {gridObjects[i, j].Symbol} ");
                 }
 
                 Console.ResetColor();

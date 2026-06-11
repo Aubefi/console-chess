@@ -4,7 +4,7 @@ namespace Chess.Assets;
 
 public enum PiecesEnum
 {
-    Pawn, Bishop, Knight, Rook, Queen, King
+    EmptySquare, Pawn, Bishop, Knight, Rook, Queen, King
 }
 
 public static class Symbols

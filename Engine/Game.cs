@@ -2,7 +2,7 @@ using System;
 using Chess.Objects;
 using Chess.UI;
 
-namespace Chess.Core;
+namespace Chess.Engine;
 
 public sealed class Game()
 {

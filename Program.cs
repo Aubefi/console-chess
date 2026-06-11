@@ -1,5 +1,5 @@
 using System;
-using Chess.Core;
+using Chess.Engine;
 
 namespace Chess;
 

@@ -2,7 +2,7 @@ using System;
 using Chess.Assets;
 using Chess.Models;
 
-namespace Chess.Core;
+namespace Chess.UI;
 
 public class Board
 {

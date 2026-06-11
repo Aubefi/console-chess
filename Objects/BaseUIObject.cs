@@ -1,6 +1,8 @@
 using System;
 
-namespace Chess.Models;
+namespace Chess.Objects;
+
+public record struct Position(byte X, byte Y);
 
 public abstract class BaseUIObject(char symbol, ConsoleColor color, byte x, byte y)
 {
@@ -9,6 +11,4 @@ public abstract class BaseUIObject(char symbol, ConsoleColor color, byte x, byte
     public ConsoleColor Color { get; protected set; } = color;
 
     public Position Coordinates { get; protected set; } = new Position(x, y);
-
-    public record struct Position(byte X, byte Y);
 }

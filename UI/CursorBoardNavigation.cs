@@ -3,7 +3,7 @@ using Chess.Objects;
 
 namespace Chess.UI;
 
-public class BoardNavigation
+public class CursorBoardNavigation
 {
     public static event Action<BaseUIObject>? PlayerSelectedPieceEvent;
 

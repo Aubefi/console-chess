@@ -1,4 +1,3 @@
-using System;
 using Chess.Engine;
 
 namespace Chess;
@@ -6,12 +5,8 @@ namespace Chess;
 public sealed class Program
 {
     public static void Main()
-    {
-        Game game = new();
+        => ChessGame().Run();
 
-        game.Start();
-        game.Update();
-
-        Console.CursorVisible = true;
-    }
+    public static Game ChessGame()
+        => new();
 }

@@ -5,6 +5,8 @@ namespace Chess.UI;
 
 public class BoardNavigation
 {
+    public static event Action<BaseUIObject>? PlayerSelectedPieceEvent;
+
     public static void ReadPlayerInput(Board board, Cursor cursor)
     {
         var keyInfo = Console.ReadKey(true);
@@ -30,6 +32,13 @@ public class BoardNavigation
             case ConsoleKey.S:
                 if (cursor.Coordinates.Y < 7) cursor.SetY((byte)(cursor.Coordinates.Y + 1));
                 break;
+
+            case ConsoleKey.Spacebar:
+            case ConsoleKey.Enter:
+                var piece = board.GetPieceByCoordinates(cursor.Coordinates);
+                PlayerSelectedPieceEvent?.Invoke(piece);
+                break;
+
             default:
                 break;
         }

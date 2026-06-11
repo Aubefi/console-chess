@@ -1,6 +1,6 @@
 using System;
 using Chess.Assets;
-using Chess.Models;
+using Chess.Objects;
 
 namespace Chess.UI;
 

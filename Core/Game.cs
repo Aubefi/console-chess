@@ -1,5 +1,5 @@
 using System;
-using Chess.Models;
+using Chess.Objects;
 using Chess.UI;
 
 namespace Chess.Core;

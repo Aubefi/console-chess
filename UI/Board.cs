@@ -8,21 +8,25 @@ namespace Chess.UI;
 
 public class Board : BaseBehavior
 {
+    private BoardRenderer? _boardRenderer;
+
     public BaseUIObject[,] GridObjects = new BaseUIObject[8, 8];
     public required Cursor BoardCursor;
 
     public override void Start()
     {
         BuildBaseGridObjects();
+
+        _boardRenderer = new BoardRenderer { GridObjects = GridObjects, Cursor = BoardCursor };
     }
 
     public override void Update()
     {
-        BoardRenderer.RenderBoard(GridObjects, BoardCursor);
+        _boardRenderer?.RenderBoard();
     }
 
     public BaseUIObject GetPieceByCoordinates(Position pos)
-        => GridObjects[pos.X, pos.Y];
+        => GridObjects[pos.Y, pos.X];
 
     private void BuildBaseGridObjects()
     {

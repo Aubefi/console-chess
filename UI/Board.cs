@@ -8,52 +8,12 @@ public class Board
 {
     public BaseUIObject[,] GridObjects = new BaseUIObject[8, 8];
 
-    public void DisplayGridObjects(Cursor cursor)
-    {
-        Console.SetCursorPosition(0, 0);
 
-        for (byte i = 0; i < 8; i++)
-        {
-            for (byte j = 0; j < 8; j++)
-            {
-                var onCursorPosition = (cursor.Coordinates.X == j) && (cursor.Coordinates.Y == i);
 
-                if (onCursorPosition) Console.BackgroundColor = ConsoleColor.Blue;
+    public BaseUIObject GetPieceByCoordinates(Position pos)
+        => GridObjects[pos.X, pos.Y];
 
-                if (GridObjects[i, j] is not null)
-                {
-                    Console.ForegroundColor = GridObjects[i, j].Color;
-
-                    if (onCursorPosition)
-                    {
-                        Console.ForegroundColor = GridObjects[i, j].Color is ConsoleColor.White
-                            ? ConsoleColor.White
-                            : ConsoleColor.Black;
-                        cursor.SetSymbol(GridObjects[i, j].Symbol);
-                    }
-
-                    Console.Write($" {GridObjects[i, j].Symbol} ");
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-
-                    if (onCursorPosition)
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkBlue;
-                        cursor.SetSymbol('\u00B7');
-                    }
-
-                    Console.Write(" \u00B7 ");
-                }
-
-                Console.ResetColor();
-            }
-            Console.Write("\n");
-        }
-    }
-
-    public void BuildBaseGridObjects()
+    private void BuildBaseGridObjects()
     {
         PiecesEnum[] backOrder = [
             PiecesEnum.Rook, PiecesEnum.Knight, PiecesEnum.Bishop, PiecesEnum.Queen,

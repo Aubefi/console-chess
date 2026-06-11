@@ -1,10 +1,11 @@
 using System;
+using Chess.Engine;
 
 namespace Chess.Objects;
 
 public record struct Position(byte X, byte Y);
 
-public abstract class BaseUIObject(char symbol, ConsoleColor color, byte x, byte y)
+public abstract class BaseUIObject(char symbol, ConsoleColor color, byte x, byte y) : BaseBehavior
 {
     public char Symbol { get; protected set; } = symbol;
 

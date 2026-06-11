@@ -87,4 +87,9 @@ public class Board
             _ => new Pawn(symbol, color, x, y)
         };
     }
+
+    public BaseUIObject GetPieceByCoordinates(Position pos)
+    {
+        return GridObjects[pos.X, pos.Y];
+    }
 }

@@ -1,14 +1,25 @@
 using System;
 using Chess.Assets;
+using Chess.Engine;
+using Chess.Graphics;
 using Chess.Objects;
 
 namespace Chess.UI;
 
-public class Board
+public class Board : BaseBehavior
 {
     public BaseUIObject[,] GridObjects = new BaseUIObject[8, 8];
+    public required Cursor BoardCursor;
 
+    public override void Start()
+    {
+        BuildBaseGridObjects();
+    }
 
+    public override void Update()
+    {
+        BoardRenderer.RenderBoard(GridObjects, BoardCursor);
+    }
 
     public BaseUIObject GetPieceByCoordinates(Position pos)
         => GridObjects[pos.X, pos.Y];

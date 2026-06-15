@@ -1,66 +1,65 @@
 using System;
 using Chess.Engine.Bases;
-using Chess.Objects;
 
 namespace Chess.Scenes.Gameplay;
 
 public class BoardNavigation : BaseBehavior
 {
     public BaseUIObject[,] BoardObjects { get; set; } = null!;
-    public Cursor BoardCursor { get; set; } = null!;
+    public BoardCursor Cursor { get; set; } = null!;
 
-    public static event Action<BaseUIObject>? PlayerSelectedPieceEvent;
+    public static event Action<BaseUIObject>? SquareObjectInteractionEvent;
 
     public override void Update()
     {
-        var keyInfo = Console.ReadKey(true);
+        var input = Console.ReadKey(true);
 
-        switch (keyInfo.Key)
+        switch (input.Key)
         {
             case ConsoleKey.UpArrow:
             case ConsoleKey.W:
-                if (BoardCursor.Pos.Y > 0)
+                if (Cursor.Pos.Y > 0)
                 {
-                    BoardCursor.SetPosition(
-                        new Position(BoardCursor.Pos.X, (byte)(BoardCursor.Pos.Y - 1))
+                    Cursor.SetPosition(
+                        new Position(Cursor.Pos.X, (byte)(Cursor.Pos.Y - 1))
                     );
                 }
                 break;
 
             case ConsoleKey.DownArrow:
             case ConsoleKey.S:
-                if (BoardCursor.Pos.Y < 7)
+                if (Cursor.Pos.Y < 7)
                 {
-                    BoardCursor.SetPosition(
-                        new Position(BoardCursor.Pos.X, (byte)(BoardCursor.Pos.Y + 1))
+                    Cursor.SetPosition(
+                        new Position(Cursor.Pos.X, (byte)(Cursor.Pos.Y + 1))
                     );
                 }
                 break;
 
             case ConsoleKey.LeftArrow:
             case ConsoleKey.A:
-                if (BoardCursor.Pos.X > 0)
+                if (Cursor.Pos.X > 0)
                 {
-                    BoardCursor.SetPosition(
-                        new Position((byte)(BoardCursor.Pos.X - 1), BoardCursor.Pos.Y)
+                    Cursor.SetPosition(
+                        new Position((byte)(Cursor.Pos.X - 1), Cursor.Pos.Y)
                     );
                 }
                 break;
 
             case ConsoleKey.RightArrow:
             case ConsoleKey.D:
-                if (BoardCursor.Pos.X < 7)
+                if (Cursor.Pos.X < 7)
                 {
-                    BoardCursor.SetPosition(
-                        new Position((byte)(BoardCursor.Pos.X + 1), BoardCursor.Pos.Y)
+                    Cursor.SetPosition(
+                        new Position((byte)(Cursor.Pos.X + 1), Cursor.Pos.Y)
                     );
                 }
                 break;
 
             case ConsoleKey.Spacebar:
             case ConsoleKey.Enter:
-                var piece = BoardObjects[BoardCursor.Pos.Y, BoardCursor.Pos.X];
-                PlayerSelectedPieceEvent?.Invoke(piece);
+                var @object = BoardObjects[Cursor.Pos.Y, Cursor.Pos.X];
+                SquareObjectInteractionEvent?.Invoke(@object);
                 break;
 
             default:

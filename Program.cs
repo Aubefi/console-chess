@@ -1,5 +1,3 @@
-using Chess.Engine;
-
 namespace Chess;
 
 public sealed class Program

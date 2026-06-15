@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using Chess.Engine.Bases;
 
 namespace Chess.Engine;
 
-public sealed class Finish : BaseObject
+public sealed class Finish : BaseState
 {
-    public required List<BaseBehavior> BaseBehaviors { get; init; }
+    public override List<BaseBehavior> Behaviors { get; set; } = [];
 
-    public override void Run()
+    public override void Execute()
     {
-        foreach (var behavior in BaseBehaviors)
+        foreach (var behavior in Behaviors)
         {
             behavior.Finish();
         }

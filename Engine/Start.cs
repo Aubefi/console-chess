@@ -1,26 +1,17 @@
-using System;
 using System.Collections.Generic;
+using Chess.Engine.Bases;
 
 namespace Chess.Engine;
 
-public sealed class Start : BaseObject
+public sealed class Start : BaseState
 {
-    public required List<BaseBehavior> BaseBehaviors { get; init; }
+    public override List<BaseBehavior> Behaviors { get; set; } = [];
 
-    public override void Run()
+    public override void Execute()
     {
-        ConfigureConsole();
-
-        foreach (var behavior in BaseBehaviors)
+        foreach (var behavior in Behaviors)
         {
             behavior.Start();
         }
-    }
-
-    private static void ConfigureConsole()
-    {
-        Console.OutputEncoding = System.Text.Encoding.UTF8;
-        Console.CursorVisible = false;
-        Console.Clear();
     }
 }

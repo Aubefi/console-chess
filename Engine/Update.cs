@@ -1,16 +1,17 @@
 using System.Collections.Generic;
+using Chess.Engine.Bases;
 
 namespace Chess.Engine;
 
-public sealed class Update : BaseObject
+public sealed class Update : BaseState
 {
-    public required List<BaseBehavior> BaseBehaviors { get; init; }
+    public override List<BaseBehavior> Behaviors { get; set; } = [];
 
-    public override void Run()
+    public override void Execute()
     {
         while (true)
         {
-            foreach (var behavior in BaseBehaviors)
+            foreach (var behavior in Behaviors)
             {
                 behavior.Update();
             }

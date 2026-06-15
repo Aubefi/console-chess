@@ -20,6 +20,36 @@ public sealed class Gameplay : BaseScene
 
         InitializeBehaviors();
         InitializeDependencies();
+
+        BoardNavigation.SquareObjectInteractionEvent += OnSquareObjectInteractionEvent;
+    }
+
+    private void OnSquareObjectInteractionEvent(BaseUIObject @object)
+    {
+        if (@object is ChessPiece piece)
+        {
+            if (_cursor.IsHoldingChessPiece)
+            {
+                _cursor.SetSymbol(char.MinValue);
+                _cursor.SetBackgroundColor(ConsoleColor.DarkBlue);
+                _cursor.SetColor(ConsoleColor.Gray);
+                _cursor.SelectedPiece = null;
+                _cursor.IsHoldingChessPiece = false;
+            }
+            else
+            {
+                _cursor.SetSymbol(piece.Symbol);
+                _cursor.SetBackgroundColor(ConsoleColor.DarkYellow);
+
+                var color = piece.Color == ConsoleColor.White
+                    ? piece.Color
+                    : ConsoleColor.Black;
+
+                _cursor.SetColor(color);
+                _cursor.SelectedPiece = piece;
+                _cursor.IsHoldingChessPiece = true;
+            }
+        }
     }
 
     protected override void InitializeBehaviors()

@@ -2,21 +2,21 @@ using System.Collections.Generic;
 
 namespace Chess.Assets;
 
-public enum PiecesEnum
+public enum SquareObject
 {
-    EmptySquare, Pawn, Bishop, Knight, Rook, Queen, King
+    Blank, Pawn, Bishop, Knight, Rook, Queen, King
 }
 
 public static class Symbols
 {
-    public static readonly Dictionary<PiecesEnum, char> BoardSymbols = new()
+    public static readonly Dictionary<SquareObject, char> Square = new()
     {
-        [PiecesEnum.EmptySquare] = '\u00B7',
-        [PiecesEnum.Pawn] = '\u2659',
-        [PiecesEnum.Bishop] = '\u2657',
-        [PiecesEnum.Knight] = '\u2658',
-        [PiecesEnum.Rook] = '\u2656',
-        [PiecesEnum.Queen] = '\u2655',
-        [PiecesEnum.King] = '\u2654'
+        [SquareObject.Blank] = '\u00B7',
+        [SquareObject.Pawn] = '\u2659',
+        [SquareObject.Bishop] = '\u2657',
+        [SquareObject.Knight] = '\u2658',
+        [SquareObject.Rook] = '\u2656',
+        [SquareObject.Queen] = '\u2655',
+        [SquareObject.King] = '\u2654'
     };
 }

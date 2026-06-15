@@ -1,7 +1,6 @@
 using System;
 using Chess.Assets;
 using Chess.Engine.Bases;
-using Chess.Objects;
 
 namespace Chess.Scenes.Gameplay;
 
@@ -10,9 +9,10 @@ public class BoardRenderer : BaseRenderer
     protected override bool IsFirstRender { get; set; } = true;
 
     public BaseUIObject[,] BoardObjects { get; set; } = null!;
-    public Cursor BoardCursor { get; set; } = null!;
+    public BoardCursor Cursor { get; set; } = null!;
 
     private Position _lastCursorPos = new(0, 0);
+    private bool _wasHoldingChessPiece = false;
 
     public override void Render()
     {
@@ -22,28 +22,36 @@ public class BoardRenderer : BaseRenderer
             return;
         }
 
-        if (BoardCursor.Pos != _lastCursorPos)
+        if (CanRender())
         {
+            _wasHoldingChessPiece = Cursor.IsHoldingChessPiece;
+
             CleanLastCursorPosition();
             UpdateCursorVisualFeedback();
         }
 
-        _lastCursorPos = BoardCursor.Pos;
+        _lastCursorPos = Cursor.Pos;
     }
+
+    // This single method took me almost 1 hour Jesus Christ faahh
+    private bool CanRender()
+        => (Cursor.Pos == _lastCursorPos && Cursor.IsHoldingChessPiece && !_wasHoldingChessPiece)
+        || (Cursor.Pos == _lastCursorPos && !Cursor.IsHoldingChessPiece && _wasHoldingChessPiece)
+        || Cursor.Pos != _lastCursorPos;
 
     public override void FirstRender()
     {
         Console.SetCursorPosition(0, 0);
 
-        _lastCursorPos = BoardCursor.Pos;
+        _lastCursorPos = Cursor.Pos;
 
         for (byte i = 0; i < 8; i++)
         {
             for (byte j = 0; j < 8; j++)
             {
-                if ((i == BoardCursor.Pos.Y) && (j == BoardCursor.Pos.X))
+                if ((i == Cursor.Pos.Y) && (j == Cursor.Pos.X))
                 {
-                    Console.BackgroundColor = BoardCursor.BackgroundColor;
+                    Console.BackgroundColor = Cursor.BackgroundColor;
                     Console.ForegroundColor = BoardObjects[i, j].Color;
                 }
                 else
@@ -65,27 +73,33 @@ public class BoardRenderer : BaseRenderer
     private void CleanLastCursorPosition()
     {
         Console.SetCursorPosition(_lastCursorPos.X * 3, _lastCursorPos.Y);
-
         Console.ResetColor();
-        Console.ForegroundColor = BoardObjects[_lastCursorPos.Y, _lastCursorPos.X].Color;
-        Console.Write($" {BoardObjects[_lastCursorPos.Y, _lastCursorPos.X].Symbol} ");
+
+        var obj = BoardObjects[_lastCursorPos.Y, _lastCursorPos.X];
+
+        Console.ForegroundColor = obj.Color;
+        Console.Write($" {obj.Symbol} ");
 
         Console.ResetColor();
     }
 
     private void UpdateCursorVisualFeedback()
     {
-        Console.SetCursorPosition(BoardCursor.Pos.X * 3, BoardCursor.Pos.Y);
+        Console.SetCursorPosition(Cursor.Pos.X * 3, Cursor.Pos.Y);
 
-        Console.BackgroundColor = BoardCursor.BackgroundColor;
+        Console.BackgroundColor = Cursor.BackgroundColor;
 
-        var obj = BoardObjects[BoardCursor.Pos.Y, BoardCursor.Pos.X];
+        var obj = BoardObjects[Cursor.Pos.Y, Cursor.Pos.X];
 
-        Console.ForegroundColor = obj.Symbol == Symbols.Square[SquareObject.Blank]
-            ? ConsoleColor.Blue
+        Console.ForegroundColor = obj.Symbol == Symbols.Square[SquareObject.Blank] || Cursor.IsHoldingChessPiece
+            ? Cursor.Color
             : obj.Color;
 
-        Console.Write($" {obj.Symbol} ");
+        var symbol = Cursor.Symbol is char.MinValue
+            ? obj.Symbol
+            : Cursor.Symbol;
+
+        Console.Write($" {symbol} ");
 
         Console.ResetColor();
     }

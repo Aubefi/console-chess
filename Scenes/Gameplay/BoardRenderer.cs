@@ -44,9 +44,9 @@ public class BoardRenderer : BaseRenderer
 
         _lastCursorPos = Cursor.Pos;
 
-        for (byte i = 0; i < 8; i++)
+        for (int i = 0; i < 8; i++)
         {
-            for (byte j = 0; j < 8; j++)
+            for (int j = 0; j < 8; j++)
             {
                 if ((i == Cursor.Pos.Y) && (j == Cursor.Pos.X))
                 {

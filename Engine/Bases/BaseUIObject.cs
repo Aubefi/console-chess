@@ -2,9 +2,9 @@ using System;
 
 namespace Chess.Engine.Bases;
 
-public record struct Position(byte X, byte Y);
+public record struct Position(int X, int Y);
 
-public abstract class BaseUIObject(char symbol, ConsoleColor color, byte x, byte y)
+public abstract class BaseUIObject(char symbol, ConsoleColor color, int x, int y)
 {
     public char Symbol { get; protected set; } = symbol;
     public virtual void SetSymbol(char symbol)

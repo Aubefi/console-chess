@@ -10,7 +10,7 @@ public enum ChessPieceColorFactor
     White = -1
 }
 
-public abstract class ChessPiece(char symbol, ConsoleColor color, byte x, byte y) : BaseUIObject(symbol, color, x, y)
+public abstract class ChessPiece(char symbol, ConsoleColor color, int x, int y) : BaseUIObject(symbol, color, x, y)
 {
     public abstract ChessPieceColorFactor ColorFactor { get; protected set; }
     public virtual void SetColorFactor(ChessPieceColorFactor colorFactor)

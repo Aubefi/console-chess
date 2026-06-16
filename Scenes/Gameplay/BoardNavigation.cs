@@ -21,7 +21,7 @@ public class BoardNavigation : BaseBehavior
                 if (Cursor.Pos.Y > 0)
                 {
                     Cursor.SetPosition(
-                        new Position(Cursor.Pos.X, (byte)(Cursor.Pos.Y - 1))
+                        new Position(Cursor.Pos.X, Cursor.Pos.Y - 1)
                     );
                 }
                 break;
@@ -31,7 +31,7 @@ public class BoardNavigation : BaseBehavior
                 if (Cursor.Pos.Y < 7)
                 {
                     Cursor.SetPosition(
-                        new Position(Cursor.Pos.X, (byte)(Cursor.Pos.Y + 1))
+                        new Position(Cursor.Pos.X, Cursor.Pos.Y + 1)
                     );
                 }
                 break;
@@ -41,7 +41,7 @@ public class BoardNavigation : BaseBehavior
                 if (Cursor.Pos.X > 0)
                 {
                     Cursor.SetPosition(
-                        new Position((byte)(Cursor.Pos.X - 1), Cursor.Pos.Y)
+                        new Position(Cursor.Pos.X - 1, Cursor.Pos.Y)
                     );
                 }
                 break;
@@ -51,7 +51,7 @@ public class BoardNavigation : BaseBehavior
                 if (Cursor.Pos.X < 7)
                 {
                     Cursor.SetPosition(
-                        new Position((byte)(Cursor.Pos.X + 1), Cursor.Pos.Y)
+                        new Position(Cursor.Pos.X + 1, Cursor.Pos.Y)
                     );
                 }
                 break;

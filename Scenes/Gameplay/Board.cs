@@ -33,7 +33,7 @@ public class Board : BaseBehavior
 
         var symbols = Symbols.Square;
 
-        for (byte i = 0; i < 8; i++)
+        for (int i = 0; i < 8; i++)
         {
             // Black pieces
             _boardObjects[0, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], Colors.Pieces["Black"], i, 0);
@@ -48,9 +48,9 @@ public class Board : BaseBehavior
             _boardObjects[7, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], Colors.Pieces["White"], i, 7);
         }
 
-        for (byte i = 2; i < 6; i++)
+        for (int i = 2; i < 6; i++)
         {
-            for (byte j = 0; j < 8; j++)
+            for (int j = 0; j < 8; j++)
             {
                 _boardObjects[i, j]
                     = CreatePiece(SquareObject.Blank, symbols[SquareObject.Blank], Colors.Square["Blank"], j, i);
@@ -58,7 +58,7 @@ public class Board : BaseBehavior
         }
     }
 
-    private static BaseUIObject CreatePiece(SquareObject type, char symbol, ConsoleColor color, byte x, byte y)
+    private static BaseUIObject CreatePiece(SquareObject type, char symbol, ConsoleColor color, int x, int y)
     {
         return type switch
         {

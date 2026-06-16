@@ -16,5 +16,5 @@ public abstract class ChessPiece(char symbol, ConsoleColor color, int x, int y) 
     public virtual void SetColorFactor(ChessPieceColorFactor colorFactor)
         => ColorFactor = colorFactor;
 
-    protected abstract List<Position> GetAllowedSquares(BaseUIObject[,] objects);
+    public abstract List<Position> GetAllowedSquares(BaseUIObject[,] objects);
 }

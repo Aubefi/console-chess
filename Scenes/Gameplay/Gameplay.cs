@@ -32,7 +32,18 @@ public sealed class Gameplay : BaseScene
             {
                 _cursor.SetSymbol(char.MinValue);
                 _cursor.SetBackgroundColor(Colors.Cursor["Default"]);
-                _cursor.SetColor(Colors.Default);
+                _cursor.SetColor(Colors.Default["Gray"]);
+
+                var allowedSquares = _cursor.SelectedPiece?.GetAllowedSquares(_board.BoardObjects);
+
+                if (allowedSquares is not null)
+                {
+                    foreach (var sqr in allowedSquares)
+                    {
+                        _board.BoardObjects[sqr.Y, sqr.X].SetBackgrounColorToNull();
+                    }
+                }
+
                 _cursor.SelectedPiece = null;
                 _cursor.IsHoldingChessPiece = false;
             }
@@ -48,6 +59,12 @@ public sealed class Gameplay : BaseScene
                 _cursor.SetColor(color);
                 _cursor.SelectedPiece = piece;
                 _cursor.IsHoldingChessPiece = true;
+
+                var allowedSquares = piece.GetAllowedSquares(_board.BoardObjects);
+                foreach (var sqr in allowedSquares)
+                {
+                    _board.BoardObjects[sqr.Y, sqr.X].SetBackgroundColor(Colors.Square["AllowedSquare"]);
+                }
             }
         }
     }

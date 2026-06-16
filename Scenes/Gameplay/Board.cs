@@ -75,4 +75,12 @@ public class Board : BaseBehavior
             _ => new Blank(symbol, color, x, y)
         };
     }
+
+    private static void SetColorFactor(BaseUIObject @object, ChessPieceColorFactor colorFactor)
+    {
+        if (@object is ChessPiece piece)
+        {
+            piece.SetColorFactor(colorFactor);
+        }
+    }
 }

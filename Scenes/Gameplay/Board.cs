@@ -10,7 +10,7 @@ public class Board : BaseBehavior
     public BoardRenderer? Renderer { get; set; }
     public BoardNavigation? Navigation { get; set; }
 
-    private readonly BaseUIObject[,] _boardObjects = new BaseUIObject[8, 8];
+    public readonly BaseUIObject[,] BoardObjects = new BaseUIObject[8, 8];
 
     public override void Start()
     {
@@ -19,9 +19,9 @@ public class Board : BaseBehavior
 
     public override void Update()
     {
-        Renderer?.BoardObjects = _boardObjects;
+        Renderer?.BoardObjects = BoardObjects;
         Renderer?.Render();
-        Navigation?.BoardObjects = _boardObjects;
+        Navigation?.BoardObjects = BoardObjects;
     }
 
     private void BuildBaseGridObjects()
@@ -36,23 +36,27 @@ public class Board : BaseBehavior
         for (int i = 0; i < 8; i++)
         {
             // Black pieces
-            _boardObjects[0, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], Colors.Pieces["Black"], i, 0);
+            BoardObjects[0, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], Colors.Pieces["Black"], i, 0);
+            SetColorFactor(BoardObjects[0, i], ChessPieceColorFactor.Black);
 
             // Black pawns
-            _boardObjects[1, i] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], Colors.Pieces["Black"], i, 1);
+            BoardObjects[1, i] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], Colors.Pieces["Black"], i, 1);
+            SetColorFactor(BoardObjects[1, i], ChessPieceColorFactor.Black);
 
             // White pawns
-            _boardObjects[6, i] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], Colors.Pieces["White"], i, 6);
+            BoardObjects[6, i] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], Colors.Pieces["White"], i, 6);
+            SetColorFactor(BoardObjects[6, i], ChessPieceColorFactor.White);
 
             // White pieces
-            _boardObjects[7, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], Colors.Pieces["White"], i, 7);
+            BoardObjects[7, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], Colors.Pieces["White"], i, 7);
+            SetColorFactor(BoardObjects[7, i], ChessPieceColorFactor.White);
         }
 
         for (int i = 2; i < 6; i++)
         {
             for (int j = 0; j < 8; j++)
             {
-                _boardObjects[i, j]
+                BoardObjects[i, j]
                     = CreatePiece(SquareObject.Blank, symbols[SquareObject.Blank], Colors.Square["Blank"], j, i);
             }
         }

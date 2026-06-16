@@ -51,7 +51,11 @@ public class BoardRenderer : BaseRenderer
             {
                 if ((i == Cursor.Pos.Y) && (j == Cursor.Pos.X))
                 {
-                    Console.BackgroundColor = Cursor.BackgroundColor;
+                    if (Cursor.BackgroundColor is ConsoleColor color)
+                    {
+                        Console.BackgroundColor = color;
+                    }
+
                     Console.ForegroundColor = BoardObjects[i, j].Color;
                 }
                 else
@@ -87,7 +91,10 @@ public class BoardRenderer : BaseRenderer
     {
         Console.SetCursorPosition(Cursor.Pos.X * 3, Cursor.Pos.Y);
 
-        Console.BackgroundColor = Cursor.BackgroundColor;
+        if (Cursor.BackgroundColor is ConsoleColor color)
+        {
+            Console.BackgroundColor = color;
+        }
 
         var obj = BoardObjects[Cursor.Pos.Y, Cursor.Pos.X];
 

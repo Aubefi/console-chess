@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Chess.Engine.Bases;
 
-namespace Chess.Assets.ChessPieces;
+namespace Chess.GameObjects.ChessPieces;
 
 public class Knight(char symbol, ConsoleColor color, int x, int y) : ChessPiece(symbol, color, x, y)
 {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Chess.Assets;
-using Chess.Assets.ChessPieces;
+using Chess.GameObjects.ChessPieces;
 using Chess.Engine.Bases;
 
 namespace Chess.Scenes.Gameplay;

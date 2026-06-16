@@ -33,7 +33,6 @@ public class BoardRenderer : BaseRenderer
         _lastCursorPos = Cursor.Pos;
     }
 
-    // This single method took me almost 1 hour Jesus Christ faahh
     private bool CanRender()
         => (Cursor.Pos == _lastCursorPos && Cursor.IsHoldingChessPiece && !_wasHoldingChessPiece)
         || (Cursor.Pos == _lastCursorPos && !Cursor.IsHoldingChessPiece && _wasHoldingChessPiece)

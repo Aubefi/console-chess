@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Chess.Assets;
 using Chess.Assets.ChessPieces;
 using Chess.Engine.Bases;
 
@@ -12,11 +13,11 @@ public sealed class Gameplay : BaseScene
     private readonly Board _board = new();
     private readonly BoardRenderer _boardRenderer = new();
     private readonly BoardNavigation _boardNavigation = new();
-    private readonly BoardCursor _cursor = new(char.MinValue, ConsoleColor.Gray, 0, 0);
+    private readonly BoardCursor _cursor = new(char.MinValue, Colors.Default, 0, 0);
 
     public Gameplay()
     {
-        _cursor.SetBackgroundColor(ConsoleColor.DarkBlue);
+        _cursor.SetBackgroundColor(Colors.Cursor["Default"]);
 
         InitializeBehaviors();
         InitializeDependencies();
@@ -31,19 +32,19 @@ public sealed class Gameplay : BaseScene
             if (_cursor.IsHoldingChessPiece)
             {
                 _cursor.SetSymbol(char.MinValue);
-                _cursor.SetBackgroundColor(ConsoleColor.DarkBlue);
-                _cursor.SetColor(ConsoleColor.Gray);
+                _cursor.SetBackgroundColor(Colors.Cursor["Default"]);
+                _cursor.SetColor(Colors.Default);
                 _cursor.SelectedPiece = null;
                 _cursor.IsHoldingChessPiece = false;
             }
             else
             {
                 _cursor.SetSymbol(piece.Symbol);
-                _cursor.SetBackgroundColor(ConsoleColor.DarkYellow);
+                _cursor.SetBackgroundColor(Colors.Cursor["PieceSelected"]);
 
-                var color = piece.Color == ConsoleColor.White
-                    ? piece.Color
-                    : ConsoleColor.Black;
+                var color = piece.Color == Colors.Pieces["White"]
+                    ? Colors.Pieces["WhiteSelected"]
+                    : Colors.Pieces["BlackSelected"];
 
                 _cursor.SetColor(color);
                 _cursor.SelectedPiece = piece;

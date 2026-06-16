@@ -36,16 +36,16 @@ public class Board : BaseBehavior
         for (byte i = 0; i < 8; i++)
         {
             // Black pieces
-            _boardObjects[0, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], ConsoleColor.Red, i, 0);
+            _boardObjects[0, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], Colors.Pieces["Black"], i, 0);
 
             // Black pawns
-            _boardObjects[1, i] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], ConsoleColor.Red, i, 1);
+            _boardObjects[1, i] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], Colors.Pieces["Black"], i, 1);
 
             // White pawns
-            _boardObjects[6, i] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], ConsoleColor.White, i, 6);
+            _boardObjects[6, i] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], Colors.Pieces["White"], i, 6);
 
             // White pieces
-            _boardObjects[7, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], ConsoleColor.White, i, 7);
+            _boardObjects[7, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], Colors.Pieces["White"], i, 7);
         }
 
         for (byte i = 2; i < 6; i++)
@@ -53,7 +53,7 @@ public class Board : BaseBehavior
             for (byte j = 0; j < 8; j++)
             {
                 _boardObjects[i, j]
-                    = CreatePiece(SquareObject.Blank, symbols[SquareObject.Blank], ConsoleColor.White, j, i);
+                    = CreatePiece(SquareObject.Blank, symbols[SquareObject.Blank], Colors.Square["Blank"], j, i);
             }
         }
     }

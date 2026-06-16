@@ -1,4 +1,4 @@
-using System;
+using Chess.Assets;
 using Chess.Assets.ChessPieces;
 using Chess.Engine.Bases;
 
@@ -12,8 +12,8 @@ public class PawnScript()
 
         var isMoveAllowed = pawn.Color switch
         {
-            ConsoleColor.White => targetPos.Y >= pawn.Pos.Y - distance,
-            ConsoleColor.Gray => targetPos.Y <= pawn.Pos.Y + distance,
+            var w when w == Colors.Pieces["White"] => targetPos.Y >= pawn.Pos.Y - distance,
+            var b when b == Colors.Pieces["Black"] => targetPos.Y <= pawn.Pos.Y + distance,
             _ => false
         };
 

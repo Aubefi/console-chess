@@ -82,7 +82,7 @@ public class BoardRenderer : BaseRenderer
         Console.ResetColor();
     }
 
-    private void UpdateCursorVisualFeedback()
+    private void UpdateVisualFeedback()
     {
         Console.SetCursorPosition(Cursor.Pos.X * 3, Cursor.Pos.Y);
 

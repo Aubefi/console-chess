@@ -23,7 +23,8 @@ public static class Colors
     {
         ["Blank"] = ConsoleColor.White,
         ["BlankHover"] = ConsoleColor.Blue,
-        ["AllowedMovement"] = ConsoleColor.Green
+        ["AllowedSquare"] = ConsoleColor.Green,
+        ["AllowedMovement"] = ConsoleColor.DarkGreen
     };
 
     public static readonly Dictionary<string, ConsoleColor> Pieces = new()

@@ -12,7 +12,7 @@ public sealed class Gameplay : BaseScene
     private readonly Board _board = new();
     private readonly BoardRenderer _boardRenderer = new();
     private readonly BoardNavigation _boardNavigation = new();
-    private readonly BoardCursor _cursor = new(char.MinValue, Colors.Default, 0, 0);
+    private readonly BoardCursor _cursor = new(char.MinValue, Colors.Default["Gray"], 0, 0);
 
     public Gameplay()
     {

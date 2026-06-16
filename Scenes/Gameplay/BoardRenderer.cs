@@ -28,6 +28,7 @@ public class BoardRenderer : BaseRenderer
 
             CleanLastCursorPosition();
             UpdateCursorVisualFeedback();
+            UpdateSquaresVisualFeedbacks();
         }
 
         _lastCursorPos = Cursor.Pos;
@@ -82,7 +83,7 @@ public class BoardRenderer : BaseRenderer
         Console.ResetColor();
     }
 
-    private void UpdateVisualFeedback()
+    private void UpdateCursorVisualFeedback()
     {
         Console.SetCursorPosition(Cursor.Pos.X * 3, Cursor.Pos.Y);
 

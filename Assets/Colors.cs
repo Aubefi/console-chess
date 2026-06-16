@@ -5,7 +5,12 @@ namespace Chess.Assets;
 
 public static class Colors
 {
-    public static readonly ConsoleColor Default = ConsoleColor.Gray;
+    public static readonly Dictionary<string, ConsoleColor> Default = new()
+    {
+        ["Black"] = ConsoleColor.Black,
+        ["Gray"] = ConsoleColor.Gray,
+        ["White"] = ConsoleColor.White
+    };
 
     public static readonly Dictionary<string, ConsoleColor> Cursor = new()
     {

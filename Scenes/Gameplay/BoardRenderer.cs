@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Chess.Assets;
 using Chess.Engine.Bases;
 
@@ -13,6 +14,8 @@ public class BoardRenderer : BaseRenderer
 
     private Position _lastCursorPos = new(0, 0);
     private bool _wasHoldingChessPiece = false;
+
+    private readonly List<Position> _highlightedSquares = [];
 
     public override void Render()
     {
@@ -107,6 +110,65 @@ public class BoardRenderer : BaseRenderer
             : Cursor.Symbol;
 
         Console.Write($" {symbol} ");
+
+        Console.ResetColor();
+    }
+
+    private void UpdateSquaresVisualFeedbacks()
+    {
+        (int x, int y) = Console.GetCursorPosition();
+
+        var clearedList = false;
+        var resetedList = false;
+
+        foreach (var obj in BoardObjects)
+        {
+            if (obj.BackgroundColor is ConsoleColor color)
+            {
+                if (!clearedList)
+                {
+                    _highlightedSquares.Clear();
+                    clearedList = true;
+                }
+
+                Console.SetCursorPosition(obj.Pos.X * 3, obj.Pos.Y);
+
+                if (obj.Pos == Cursor.Pos)
+                {
+                    Console.BackgroundColor = Colors.Square["AllowedMovement"];
+                    Console.ForegroundColor = Colors.Default["White"];
+                    Console.Write($" {Cursor.Symbol} ");
+                }
+                else
+                {
+                    Console.BackgroundColor = color;
+                    Console.ForegroundColor = Colors.Default["Black"];
+                    Console.Write($" {obj.Symbol} ");
+                }
+
+                _highlightedSquares.Add(new Position(obj.Pos.X, obj.Pos.Y));
+            }
+            else if (_highlightedSquares.Contains(new Position(obj.Pos.X, obj.Pos.Y)) && obj.BackgroundColor is null)
+            {
+                if (!resetedList)
+                {
+                    resetedList = true;
+                }
+
+                Console.ForegroundColor = obj.Color;
+
+                Console.SetCursorPosition(obj.Pos.X * 3, obj.Pos.Y);
+
+                Console.Write($" {obj.Symbol} ");
+            }
+        }
+
+        if (resetedList)
+        {
+            _highlightedSquares.Clear();
+        }
+
+        Console.SetCursorPosition(x, y);
 
         Console.ResetColor();
     }

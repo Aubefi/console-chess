@@ -5,12 +5,10 @@ namespace Chess;
 
 public sealed class Game
 {
-    private readonly GameState _gameState;
+    private readonly GameState _gameState = new();
 
     public Game()
     {
-        _gameState = new();
-
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         Console.Clear();
         Console.CursorVisible = false;

@@ -25,16 +25,18 @@ public sealed class Gameplay : BaseScene
     protected override void InitializeBehaviors()
     {
         Behaviors.Add(_board);
+        Behaviors.Add(_boardRenderer);
         Behaviors.Add(_boardNavigation);
     }
 
     protected override void InitializeDependencies()
     {
         _boardRenderer.Cursor = _boardCursor;
-
         _boardNavigation.Cursor = _boardCursor;
-
-        _boardInteraction.BoardObjects = _board.BoardObjects;
         _boardInteraction.Cursor = _boardCursor;
+
+        _boardRenderer.BoardObjects = _board.BoardObjects;
+        _boardNavigation.BoardObjects = _board.BoardObjects;
+        _boardInteraction.BoardObjects = _board.BoardObjects;
     }
 }

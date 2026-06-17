@@ -26,18 +26,25 @@ public class Pawn : ChessPiece
 
     public override List<Position> GetLegalMoves(BaseUIObject[,] boardObjects)
     {
-        var pawnMoves = new List<Position>()
+        var pawnMoves = GetPawnMoves(boardObjects);
+
+        pawnMoves.RemoveAll(p => !IsPositionInsideBoard(p));
+
+        return pawnMoves;
+    }
+
+    private List<Position> GetPawnMoves(BaseUIObject[,] boardObjects)
+    {
+        var list = new List<Position>
         {
             new(Pos.X, Pos.Y + (int)Direction)
         };
 
         if (!HasMoved)
         {
-            pawnMoves.Add(new(Pos.X, Pos.Y + (int)Direction * 2));
+            list.Add(new(Pos.X, Pos.Y + (int)Direction * 2));
         }
 
-        pawnMoves.RemoveAll(p => !IsPositionInsideBoard(p));
-
-        return pawnMoves;
+        return list;
     }
 }

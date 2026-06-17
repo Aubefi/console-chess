@@ -4,11 +4,18 @@ using Chess.Engine.Bases;
 
 namespace Chess.GameObjects.ChessPieces;
 
+public enum PawnDirection
+{
+    Black = 1,
+    White = -1
+}
+
 public class Pawn(char symbol, ConsoleColor color, int x, int y) : ChessPiece(symbol, color, x, y)
 {
-    public bool HasMoved { get; set; } = false;
+    public PawnDirection Direction { get; private set; }
+    public void SetPawnDirection(PawnDirection direction)
+        => Direction = direction;
 
-    public override ChessPieceColorFactor ColorFactor { get; protected set; }
 
     private List<Position> _allowedSquares = [];
 

@@ -37,19 +37,17 @@ public class Board : BaseBehavior
         {
             // Black pieces
             BoardObjects[0, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], Colors.Pieces["Black"], i, 0);
-            SetColorFactor(BoardObjects[0, i], ChessPieceColorFactor.Black);
 
             // Black pawns
             BoardObjects[1, i] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], Colors.Pieces["Black"], i, 1);
-            SetColorFactor(BoardObjects[1, i], ChessPieceColorFactor.Black);
+            SetPawnDirection(BoardObjects[1, i], PawnDirection.Black);
 
             // White pawns
             BoardObjects[6, i] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], Colors.Pieces["White"], i, 6);
-            SetColorFactor(BoardObjects[6, i], ChessPieceColorFactor.White);
+            SetPawnDirection(BoardObjects[6, i], PawnDirection.White);
 
             // White pieces
             BoardObjects[7, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], Colors.Pieces["White"], i, 7);
-            SetColorFactor(BoardObjects[7, i], ChessPieceColorFactor.White);
         }
 
         for (int i = 2; i < 6; i++)
@@ -76,11 +74,11 @@ public class Board : BaseBehavior
         };
     }
 
-    private static void SetColorFactor(BaseUIObject @object, ChessPieceColorFactor colorFactor)
+    private static void SetPawnDirection(BaseUIObject obj, PawnDirection direction)
     {
-        if (@object is ChessPiece piece)
+        if (obj is Pawn pawn)
         {
-            piece.SetColorFactor(colorFactor);
+            pawn.SetPawnDirection(direction);
         }
     }
 }

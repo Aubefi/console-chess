@@ -8,6 +8,39 @@ public class Rook(char symbol, ConsoleColor color, int x, int y) : ChessPiece(sy
 {
     public override List<Position> GetLegalMoves(BaseUIObject[,] boardObjects)
     {
-        throw new NotImplementedException();
+        var rookMoves = CalculateRookMoves(boardObjects);
+
+        rookMoves.RemoveAll(p => !IsPositionInsideBoard(p));
+
+        return rookMoves;
+    }
+
+    private List<Position> CalculateRookMoves(BaseUIObject[,] boardObjects)
+    {
+        var list = new List<Position>();
+
+        var a = (x: 1, y: 0);
+
+        for (int k = 0; k < 4; k++)
+        {
+            var pos = new Position(Pos.X + a.x, Pos.Y + a.y);
+
+            var sumX = a.x;
+            var sumY = a.y;
+
+            while (!IsPositionOccupied(boardObjects, pos))
+            {
+                list.Add(pos);
+
+                sumX += a.x;
+                sumY += a.y;
+
+                pos = new(Pos.X + sumX, Pos.Y + sumY);
+            }
+
+            (a.x, a.y) = (-a.y, a.x);
+        }
+
+        return list;
     }
 }

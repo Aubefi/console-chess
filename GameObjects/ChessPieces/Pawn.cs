@@ -36,7 +36,7 @@ public class Pawn : ChessPiece
             pawnMoves.Add(new(Pos.X, Pos.Y + (int)Direction * 2));
         }
 
-        pawnMoves.RemoveAll(p => !IsPositionInsideBoard(p) || boardObjects[p.Y, p.X] is ChessPiece);
+        pawnMoves.RemoveAll(p => !IsPositionInsideBoard(p));
 
         return pawnMoves;
     }

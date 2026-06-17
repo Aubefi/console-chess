@@ -17,7 +17,7 @@ public class BoardRenderer : BaseRenderer
 
     private readonly List<Position> _highlightedSquares = [];
 
-    public override void Render()
+    public override void Update()
     {
         if (IsFirstRender)
         {

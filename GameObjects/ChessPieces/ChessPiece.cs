@@ -13,5 +13,14 @@ public abstract class ChessPiece(char symbol, ConsoleColor color, int x, int y) 
     protected static bool IsPositionOccupied(BaseUIObject[,] boardObjects, Position pos)
         => boardObjects[pos.Y, pos.X] is ChessPiece;
 
-    public abstract List<Position> GetLegalMoves(BaseUIObject[,] objects);
+    protected abstract List<Position> CalculateMoves(BaseUIObject[,] boardObjects);
+
+    public List<Position> GetLegalMoves(BaseUIObject[,] boardObjects)
+    {
+        var pieceMoves = CalculateMoves(boardObjects);
+
+        pieceMoves.RemoveAll(p => !IsPositionInsideBoard(p));
+
+        return pieceMoves;
+    }
 }

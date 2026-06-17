@@ -24,16 +24,7 @@ public class Pawn : ChessPiece
     public void SetPawnDirection(PawnDirection direction)
         => Direction = direction;
 
-    public override List<Position> GetLegalMoves(BaseUIObject[,] boardObjects)
-    {
-        var pawnMoves = GetPawnMoves(boardObjects);
-
-        pawnMoves.RemoveAll(p => !IsPositionInsideBoard(p));
-
-        return pawnMoves;
-    }
-
-    private List<Position> GetPawnMoves(BaseUIObject[,] boardObjects)
+    protected override List<Position> CalculateMoves(BaseUIObject[,] boardObjects)
     {
         var list = new List<Position>
         {

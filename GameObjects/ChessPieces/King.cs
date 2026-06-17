@@ -6,16 +6,7 @@ namespace Chess.GameObjects.ChessPieces;
 
 public class King(char symbol, ConsoleColor color, int x, int y) : ChessPiece(symbol, color, x, y)
 {
-    public override List<Position> GetLegalMoves(BaseUIObject[,] boardObjects)
-    {
-        var kingMoves = CalculateKingMoves(boardObjects);
-
-        kingMoves.RemoveAll(p => !IsPositionInsideBoard(p));
-
-        return kingMoves;
-    }
-
-    private List<Position> CalculateKingMoves(BaseUIObject[,] boardObjects)
+    protected override List<Position> CalculateMoves(BaseUIObject[,] boardObjects)
     {
         var list = new List<Position>();
 

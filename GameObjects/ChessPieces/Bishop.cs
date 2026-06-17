@@ -6,16 +6,7 @@ namespace Chess.GameObjects.ChessPieces;
 
 public class Bishop(char symbol, ConsoleColor color, int x, int y) : ChessPiece(symbol, color, x, y)
 {
-    public override List<Position> GetLegalMoves(BaseUIObject[,] boardObjects)
-    {
-        var bishopMoves = CalculateBishopMoves(boardObjects);
-
-        bishopMoves.RemoveAll(p => !IsPositionInsideBoard(p));
-
-        return bishopMoves;
-    }
-
-    private List<Position> CalculateBishopMoves(BaseUIObject[,] boardObjects)
+    protected override List<Position> CalculateMoves(BaseUIObject[,] boardObjects)
     {
         var list = new List<Position>();
 

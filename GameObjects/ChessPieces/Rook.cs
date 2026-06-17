@@ -6,16 +6,7 @@ namespace Chess.GameObjects.ChessPieces;
 
 public class Rook(char symbol, ConsoleColor color, int x, int y) : ChessPiece(symbol, color, x, y)
 {
-    public override List<Position> GetLegalMoves(BaseUIObject[,] boardObjects)
-    {
-        var rookMoves = CalculateRookMoves(boardObjects);
-
-        rookMoves.RemoveAll(p => !IsPositionInsideBoard(p));
-
-        return rookMoves;
-    }
-
-    private List<Position> CalculateRookMoves(BaseUIObject[,] boardObjects)
+    protected override List<Position> CalculateMoves(BaseUIObject[,] boardObjects)
     {
         var list = new List<Position>();
 

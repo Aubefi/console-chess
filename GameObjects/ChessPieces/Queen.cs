@@ -6,16 +6,7 @@ namespace Chess.GameObjects.ChessPieces;
 
 public class Queen(char symbol, ConsoleColor color, int x, int y) : ChessPiece(symbol, color, x, y)
 {
-    public override List<Position> GetLegalMoves(BaseUIObject[,] boardObjects)
-    {
-        var queenMoves = CalculateQueenMoves(boardObjects);
-
-        queenMoves.RemoveAll(p => !IsPositionInsideBoard(p));
-
-        return queenMoves;
-    }
-
-    private List<Position> CalculateQueenMoves(BaseUIObject[,] boardObjects)
+    protected override List<Position> CalculateMoves(BaseUIObject[,] boardObjects)
     {
         var list = new List<Position>();
 

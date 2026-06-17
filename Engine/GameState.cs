@@ -5,20 +5,11 @@ namespace Chess.Engine;
 
 public sealed class GameState
 {
-    private readonly Start _start;
-    private readonly Update _update;
-    private readonly Finish _finish;
+    private readonly Start _start = new();
+    private readonly Update _update = new();
+    private readonly Finish _finish = new();
 
-    private readonly BaseScene _scene;
-
-    public GameState()
-    {
-        _start = new();
-        _update = new();
-        _finish = new();
-
-        _scene = new Gameplay();
-    }
+    private readonly BaseScene _scene = new Gameplay();
 
     public void Initialize()
     {

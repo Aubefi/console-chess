@@ -8,7 +8,7 @@ public class BoardNavigation : BaseBehavior
     public BaseUIObject[,] BoardObjects { get; set; } = null!;
     public BoardCursor Cursor { get; set; } = null!;
 
-    public static event Action<BaseUIObject>? SquareObjectInteractionEvent;
+    public static event Action<BaseUIObject>? SquareInteractionEvent;
 
     public override void Update()
     {
@@ -58,8 +58,8 @@ public class BoardNavigation : BaseBehavior
 
             case ConsoleKey.Spacebar:
             case ConsoleKey.Enter:
-                var @object = BoardObjects[Cursor.Pos.Y, Cursor.Pos.X];
-                SquareObjectInteractionEvent?.Invoke(@object);
+                var obj = BoardObjects[Cursor.Pos.Y, Cursor.Pos.X];
+                SquareInteractionEvent?.Invoke(obj);
                 break;
 
             default:

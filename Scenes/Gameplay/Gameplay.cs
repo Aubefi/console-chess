@@ -21,12 +21,12 @@ public sealed class Gameplay : BaseScene
         InitializeBehaviors();
         InitializeDependencies();
 
-        BoardNavigation.SquareObjectInteractionEvent += OnSquareObjectInteractionEvent;
+        BoardNavigation.SquareInteractionEvent += HandleSquareInteraction;
     }
 
-    private void OnSquareObjectInteractionEvent(BaseUIObject @object)
+    private void HandleSquareInteraction(BaseUIObject interactedObject)
     {
-        if (@object is ChessPiece piece)
+        if (interactedObject is ChessPiece piece)
         {
             if (_cursor.IsHoldingChessPiece)
             {

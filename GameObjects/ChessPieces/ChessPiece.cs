@@ -10,5 +10,8 @@ public abstract class ChessPiece(char symbol, ConsoleColor color, int x, int y) 
         => pos.X < 8 && pos.X >= 0
         && pos.Y < 8 && pos.Y >= 0;
 
+    protected static bool IsPositionOccupied(BaseUIObject[,] boardObjects, Position pos)
+        => boardObjects[pos.Y, pos.X] is ChessPiece;
+
     public abstract List<Position> GetLegalMoves(BaseUIObject[,] objects);
 }

@@ -7,21 +7,11 @@ namespace Chess.Scenes.Gameplay;
 
 public class Board : BaseBehavior
 {
-    public BoardRenderer? Renderer { get; set; }
-    public BoardNavigation? Navigation { get; set; }
-
     public readonly BaseUIObject[,] BoardObjects = new BaseUIObject[8, 8];
 
     public override void Start()
     {
         BuildBaseGridObjects();
-    }
-
-    public override void Update()
-    {
-        Renderer?.BoardObjects = BoardObjects;
-        Renderer?.Render();
-        Navigation?.BoardObjects = BoardObjects;
     }
 
     private void BuildBaseGridObjects()

@@ -36,8 +36,5 @@ public sealed class Gameplay : BaseScene
 
         _boardInteraction.BoardObjects = _board.BoardObjects;
         _boardInteraction.Cursor = _boardCursor;
-
-        _board.Renderer = _boardRenderer;
-        _board.Navigation = _boardNavigation;
     }
 }

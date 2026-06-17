@@ -16,10 +16,7 @@ public class Pawn(char symbol, ConsoleColor color, int x, int y) : ChessPiece(sy
     public void SetPawnDirection(PawnDirection direction)
         => Direction = direction;
 
-
-    private List<Position> _allowedSquares = [];
-
-    public override List<Position> GetAllowedSquares(BaseUIObject[,] objects)
+    public override List<Position> GetLegalMoves(BaseUIObject[,] boardObjects)
     {
         _allowedSquares = [];
 

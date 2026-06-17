@@ -34,11 +34,11 @@ public sealed class Gameplay : BaseScene
                 _cursor.SetBackgroundColor(Colors.Cursor["Default"]);
                 _cursor.SetColor(Colors.Default["Gray"]);
 
-                var allowedSquares = _cursor.SelectedPiece?.GetAllowedSquares(_board.BoardObjects);
+                var legalMovesPos = _cursor.SelectedPiece?.GetLegalMoves(_board.BoardObjects);
 
-                if (allowedSquares is not null)
+                if (legalMovesPos is not null)
                 {
-                    foreach (var sqr in allowedSquares)
+                    foreach (var pos in legalMovesPos)
                     {
                         _board.BoardObjects[pos.Y, pos.X].RemoveBackgroundColor();
                     }
@@ -60,10 +60,11 @@ public sealed class Gameplay : BaseScene
                 _cursor.SelectedPiece = piece;
                 _cursor.IsHoldingChessPiece = true;
 
-                var allowedSquares = piece.GetAllowedSquares(_board.BoardObjects);
-                foreach (var sqr in allowedSquares)
+                var legalMoves = piece.GetLegalMoves(_board.BoardObjects);
+
+                foreach (var pos in legalMoves)
                 {
-                    _board.BoardObjects[sqr.Y, sqr.X].SetBackgroundColor(Colors.Square["AllowedSquare"]);
+                    _board.BoardObjects[pos.Y, pos.X].SetBackgroundColor(Colors.Square["AllowedSquare"]);
                 }
             }
         }

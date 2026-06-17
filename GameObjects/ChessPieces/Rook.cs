@@ -6,9 +6,7 @@ namespace Chess.GameObjects.ChessPieces;
 
 public class Rook(char symbol, ConsoleColor color, int x, int y) : ChessPiece(symbol, color, x, y)
 {
-    public override ChessPieceColorFactor ColorFactor { get; protected set; }
-
-    public override List<Position> GetAllowedSquares(BaseUIObject[,] objects)
+    public override List<Position> GetLegalMoves(BaseUIObject[,] objects)
     {
         throw new NotImplementedException();
     }

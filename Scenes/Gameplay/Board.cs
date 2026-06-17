@@ -1,7 +1,7 @@
 using System;
 using Chess.Assets;
-using Chess.GameObjects.ChessPieces;
 using Chess.Engine.Bases;
+using Chess.GameObjects.ChessPieces;
 
 namespace Chess.Scenes.Gameplay;
 

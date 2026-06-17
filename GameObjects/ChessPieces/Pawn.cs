@@ -22,23 +22,18 @@ public class Pawn(char symbol, ConsoleColor color, int x, int y) : ChessPiece(sy
 
     public override List<Position> GetLegalMoves(BaseUIObject[,] boardObjects)
     {
-        _allowedSquares = [];
-
-        TryAddPosition(objects, new Position(Pos.X, Pos.Y + (int)ColorFactor));
+        var pawnMoves = new List<Position>()
+        {
+            new(Pos.X, Pos.Y + (int)Direction)
+        };
 
         if (!HasMoved)
         {
-            TryAddPosition(objects, new Position(Pos.X, Pos.Y + 2 * (int)ColorFactor));
+            pawnMoves.Add(new(Pos.X, Pos.Y + (int)Direction * 2));
         }
 
-        return _allowedSquares;
-    }
+        pawnMoves.RemoveAll(p => !IsPositionInsideBoard(p) || boardObjects[p.Y, p.X] is ChessPiece);
 
-    private void TryAddPosition(BaseUIObject[,] objects, Position pos)
-    {
-        if (objects[pos.Y, pos.X] is not ChessPiece)
-        {
-            _allowedSquares.Add(pos);
-        }
+        return pawnMoves;
     }
 }

@@ -23,7 +23,7 @@ public class Queen(char symbol, ConsoleColor color, int x, int y) : ChessPiece(s
             var sumBX = b.x;
             var sumBY = b.y;
 
-            while (!IsPositionOccupied(boardObjects, posA))
+            while (IsPositionInsideBoard(posA) && !IsPositionOccupied(boardObjects, posA))
             {
                 list.Add(posA);
 
@@ -33,7 +33,7 @@ public class Queen(char symbol, ConsoleColor color, int x, int y) : ChessPiece(s
                 posA = new(Pos.X + sumAX, Pos.Y + sumAY);
             }
 
-            while (!IsPositionOccupied(boardObjects, posB))
+            while (IsPositionInsideBoard(posB) && !IsPositionOccupied(boardObjects, posB))
             {
                 list.Add(posB);
 

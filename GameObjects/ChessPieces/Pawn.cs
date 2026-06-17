@@ -36,7 +36,7 @@ public class Pawn : ChessPiece
             list.Add(new(Pos.X, Pos.Y + (int)Direction * 2));
         }
 
-        list.RemoveAll(p => IsPositionOccupied(boardObjects, p));
+        list.RemoveAll(p => !IsPositionInsideBoard(p) || IsPositionOccupied(boardObjects, p));
 
         return list;
     }

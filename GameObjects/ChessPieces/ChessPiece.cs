@@ -16,11 +16,5 @@ public abstract class ChessPiece(char symbol, ConsoleColor color, int x, int y) 
     protected abstract List<Position> CalculateMoves(BaseUIObject[,] boardObjects);
 
     public List<Position> GetLegalMoves(BaseUIObject[,] boardObjects)
-    {
-        var pieceMoves = CalculateMoves(boardObjects);
-
-        pieceMoves.RemoveAll(p => !IsPositionInsideBoard(p));
-
-        return pieceMoves;
-    }
+        => CalculateMoves(boardObjects);
 }

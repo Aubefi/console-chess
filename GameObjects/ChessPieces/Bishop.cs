@@ -19,7 +19,7 @@ public class Bishop(char symbol, ConsoleColor color, int x, int y) : ChessPiece(
             var sumX = a.x;
             var sumY = a.y;
 
-            while (!IsPositionOccupied(boardObjects, pos))
+            while (IsPositionInsideBoard(pos) && !IsPositionOccupied(boardObjects, pos))
             {
                 list.Add(pos);
 

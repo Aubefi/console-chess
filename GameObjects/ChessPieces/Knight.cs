@@ -22,6 +22,8 @@ public class Knight(char symbol, ConsoleColor color, int x, int y) : ChessPiece(
             list.Add(new(Pos.X + b.x, Pos.Y + b.y));
         }
 
+        list.RemoveAll(p => IsPositionOccupied(boardObjects, p));
+
         return list;
     }
 }

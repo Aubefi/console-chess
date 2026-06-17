@@ -10,11 +10,15 @@ public enum PawnDirection
     White = -1
 }
 
-public class Pawn(char symbol, ConsoleColor color, int x, int y) : ChessPiece(symbol, color, x, y)
+public class Pawn : ChessPiece
 {
-    public bool HasMoved { get; private set; } = false;
-    public void MadeFirstMove()
-        => HasMoved = true;
+    private readonly Position _originalPosition;
+    private bool HasMoved => Pos != _originalPosition;
+
+    public Pawn(char symbol, ConsoleColor color, int x, int y) : base(symbol, color, x, y)
+    {
+        _originalPosition = Pos;
+    }
 
     public PawnDirection Direction { get; private set; }
     public void SetPawnDirection(PawnDirection direction)

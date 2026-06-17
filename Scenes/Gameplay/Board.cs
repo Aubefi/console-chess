@@ -10,9 +10,7 @@ public class Board : BaseBehavior
     public readonly BaseUIObject[,] BoardObjects = new BaseUIObject[8, 8];
 
     public override void Start()
-    {
-        BuildBaseGridObjects();
-    }
+        => BuildBaseGridObjects();
 
     private void BuildBaseGridObjects()
     {

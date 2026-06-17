@@ -17,7 +17,7 @@ public abstract class BaseUIObject(char symbol, ConsoleColor color, int x, int y
     public ConsoleColor? BackgroundColor { get; protected set; } = null;
     public virtual void SetBackgroundColor(ConsoleColor color)
         => BackgroundColor = color;
-    public virtual void SetBackgrounColorToNull()
+    public virtual void RemoveBackgroundColor()
         => BackgroundColor = null;
 
     public Position Pos { get; protected set; } = new Position(x, y);

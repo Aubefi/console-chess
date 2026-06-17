@@ -40,7 +40,7 @@ public sealed class Gameplay : BaseScene
                 {
                     foreach (var sqr in allowedSquares)
                     {
-                        _board.BoardObjects[sqr.Y, sqr.X].SetBackgrounColorToNull();
+                        _board.BoardObjects[pos.Y, pos.X].RemoveBackgroundColor();
                     }
                 }
 

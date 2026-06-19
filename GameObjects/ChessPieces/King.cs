@@ -13,7 +13,7 @@ public class King(char symbol, ConsoleColor color, int x, int y) : ChessPiece(sy
         var a = (x: 1, y: 0);
         var b = (x: 1, y: 1);
 
-        for (int k = 0; k < 4; k++)
+        for (var k = 0; k < 4; k++)
         {
             (a.x, a.y) = (-a.y, a.x);
             list.Add(new(Pos.X + a.x, Pos.Y + a.y));

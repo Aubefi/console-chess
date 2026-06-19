@@ -14,7 +14,8 @@ public static class Colors
 
     public static readonly Dictionary<string, ConsoleColor> Cursor = new()
     {
-        ["Default"] = ConsoleColor.DarkBlue,
+        ["Foreground"] = ConsoleColor.Blue,
+        ["Background"] = ConsoleColor.DarkBlue,
         ["Error"] = ConsoleColor.DarkRed,
         ["PieceSelected"] = ConsoleColor.DarkYellow,
     };

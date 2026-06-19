@@ -21,7 +21,7 @@ public class BoardNavigation : BaseBehavior
                 if (Cursor.Pos.Y > 0)
                 {
                     Cursor.SetPosition(
-                        new Position(Cursor.Pos.X, Cursor.Pos.Y - 1)
+                        new(Cursor.Pos.X, Cursor.Pos.Y - 1)
                     );
                 }
                 break;
@@ -31,7 +31,7 @@ public class BoardNavigation : BaseBehavior
                 if (Cursor.Pos.Y < 7)
                 {
                     Cursor.SetPosition(
-                        new Position(Cursor.Pos.X, Cursor.Pos.Y + 1)
+                        new(Cursor.Pos.X, Cursor.Pos.Y + 1)
                     );
                 }
                 break;
@@ -41,7 +41,7 @@ public class BoardNavigation : BaseBehavior
                 if (Cursor.Pos.X > 0)
                 {
                     Cursor.SetPosition(
-                        new Position(Cursor.Pos.X - 1, Cursor.Pos.Y)
+                        new(Cursor.Pos.X - 1, Cursor.Pos.Y)
                     );
                 }
                 break;
@@ -51,15 +51,15 @@ public class BoardNavigation : BaseBehavior
                 if (Cursor.Pos.X < 7)
                 {
                     Cursor.SetPosition(
-                        new Position(Cursor.Pos.X + 1, Cursor.Pos.Y)
+                        new(Cursor.Pos.X + 1, Cursor.Pos.Y)
                     );
                 }
                 break;
 
             case ConsoleKey.Spacebar:
             case ConsoleKey.Enter:
-                var obj = BoardObjects[Cursor.Pos.Y, Cursor.Pos.X];
-                SquareInteractionEvent?.Invoke(obj);
+                var interactedObject = BoardObjects[Cursor.Pos.Y, Cursor.Pos.X];
+                SquareInteractionEvent?.Invoke(interactedObject);
                 break;
 
             default:

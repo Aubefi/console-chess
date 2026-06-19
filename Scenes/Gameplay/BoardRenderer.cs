@@ -14,10 +14,10 @@ public class BoardRenderer : BaseRenderer
     public BoardCursor Cursor { get; set; } = null!;
 
     private readonly BaseUIObject[,] _lastBoardObjects = new BaseUIObject[8, 8];
+    private readonly List<Position> _activeLegalMoves = [];
+
     private Position _lastCursorPos = new(0, 0);
     private bool _wasHoldingChessPiece = false;
-
-    private readonly List<Position> _highlightedSquares = [];
 
     public override void Start()
     {
@@ -36,10 +36,11 @@ public class BoardRenderer : BaseRenderer
         {
             _wasHoldingChessPiece = Cursor.IsHoldingChessPiece;
 
-            CleanLastCursorPosition();
-            UpdateCursorVisualFeedback();
-            UpdateSquaresVisualFeedbacks();
-            UpdatePiecesPositionFeedback();
+            ClearLastCursorPosition();
+            DisplayNewCursorPosition();
+            DisplayLegalMoves();
+            HideLegalMoves();
+            UpdatePiecesPosition();
         }
 
         _lastCursorPos = Cursor.Pos;
@@ -53,9 +54,9 @@ public class BoardRenderer : BaseRenderer
 
     private bool SomePieceMoved()
     {
-        for (int i = 0; i < 8; i++)
+        for (var i = 0; i < 8; i++)
         {
-            for (int j = 0; j < 8; j++)
+            for (var j = 0; j < 8; j++)
             {
                 if (BoardObjects[i, j] != _lastBoardObjects[i, j])
                 {
@@ -70,52 +71,60 @@ public class BoardRenderer : BaseRenderer
     {
         Console.SetCursorPosition(0, 0);
 
-        _lastCursorPos = Cursor.Pos;
-
-        for (int i = 0; i < 8; i++)
+        for (var i = 0; i < 8; i++)
         {
-            for (int j = 0; j < 8; j++)
+            for (var j = 0; j < 8; j++)
             {
-                if ((i == Cursor.Pos.Y) && (j == Cursor.Pos.X))
+                if ((j == Cursor.Pos.X) && (i == Cursor.Pos.Y) && Cursor.BackgroundColor is ConsoleColor color)
                 {
-                    if (Cursor.BackgroundColor is ConsoleColor color)
-                    {
-                        Console.BackgroundColor = color;
-                    }
+                    Console.BackgroundColor = color;
+                    Console.Write($" {BoardObjects[i, j].Symbol} ");
+                    Console.ResetColor();
 
-                    Console.ForegroundColor = BoardObjects[i, j].Color;
-                }
-                else
-                {
-                    Console.ForegroundColor = BoardObjects[i, j].Color;
+                    continue;
                 }
 
+                Console.ForegroundColor = BoardObjects[i, j].Color;
                 Console.Write($" {BoardObjects[i, j].Symbol} ");
-
-                Console.ResetColor();
             }
+
             Console.Write("\n");
         }
+
         IsFirstRender = false;
+        _lastCursorPos = Cursor.Pos;
 
         Console.ResetColor();
     }
 
-    private void CleanLastCursorPosition()
+    private void ClearLastCursorPosition()
     {
+        if (Cursor.Pos == _lastCursorPos)
+        {
+            return;
+        }
+
+        Console.ResetColor();
+
         Console.SetCursorPosition(_lastCursorPos.X * 3, _lastCursorPos.Y);
-        Console.ResetColor();
 
-        var obj = BoardObjects[_lastCursorPos.Y, _lastCursorPos.X];
+        var square = BoardObjects[_lastCursorPos.Y, _lastCursorPos.X];
 
-        Console.ForegroundColor = obj.Color;
-        Console.Write($" {obj.Symbol} ");
+        Console.ForegroundColor = square.Color;
+        Console.Write($" {square.Symbol} ");
 
         Console.ResetColor();
     }
 
-    private void UpdateCursorVisualFeedback()
+    private void DisplayNewCursorPosition()
     {
+        if (Cursor.Pos == _lastCursorPos)
+        {
+            return;
+        }
+
+        Console.ResetColor();
+
         Console.SetCursorPosition(Cursor.Pos.X * 3, Cursor.Pos.Y);
 
         if (Cursor.BackgroundColor is ConsoleColor color)
@@ -123,14 +132,15 @@ public class BoardRenderer : BaseRenderer
             Console.BackgroundColor = color;
         }
 
-        var obj = BoardObjects[Cursor.Pos.Y, Cursor.Pos.X];
+        var square = BoardObjects[Cursor.Pos.Y, Cursor.Pos.X];
 
-        Console.ForegroundColor = obj.Symbol == Symbols.Square[SquareObject.Blank] || Cursor.IsHoldingChessPiece
+        Console.ForegroundColor = square is Blank || Cursor.IsHoldingChessPiece
             ? Cursor.Color
-            : obj.Color;
+            : square.Color;
 
+        // Cursor.Symbol being char.MinValue means he is NOT holding a chess piece
         var symbol = Cursor.Symbol is char.MinValue
-            ? obj.Symbol
+            ? square.Symbol
             : Cursor.Symbol;
 
         Console.Write($" {symbol} ");
@@ -138,99 +148,107 @@ public class BoardRenderer : BaseRenderer
         Console.ResetColor();
     }
 
-    private void UpdateSquaresVisualFeedbacks()
+    private void HideLegalMoves()
     {
+        if (Cursor.IsHoldingChessPiece || _activeLegalMoves.Count == 0)
+        {
+            return;
+        }
+
         (int x, int y) = Console.GetCursorPosition();
 
-        var clearedList = false;
-        var resetedList = false;
-
-        foreach (var obj in BoardObjects)
+        foreach (var pos in _activeLegalMoves)
         {
-            if (obj.BackgroundColor is ConsoleColor color)
-            {
-                if (!clearedList)
-                {
-                    _highlightedSquares.Clear();
-                    clearedList = true;
-                }
+            var square = BoardObjects[pos.Y, pos.X];
+            Console.SetCursorPosition(square.Pos.X * 3, square.Pos.Y);
 
-                Console.SetCursorPosition(obj.Pos.X * 3, obj.Pos.Y);
-
-                if (obj.Pos == Cursor.Pos)
-                {
-                    Console.BackgroundColor = Colors.Square["AllowedMovement"];
-                    Console.ForegroundColor = Colors.Default["White"];
-                    Console.Write($" {Cursor.Symbol} ");
-                }
-                else
-                {
-                    Console.BackgroundColor = color;
-                    Console.ForegroundColor = Colors.Default["Black"];
-                    Console.Write($" {obj.Symbol} ");
-                }
-
-                _highlightedSquares.Add(new Position(obj.Pos.X, obj.Pos.Y));
-            }
-            else if (_highlightedSquares.Contains(new Position(obj.Pos.X, obj.Pos.Y)) && obj.BackgroundColor is null)
-            {
-                if (!resetedList)
-                {
-                    resetedList = true;
-                }
-
-                Console.ForegroundColor = obj.Color;
-
-                Console.SetCursorPosition(obj.Pos.X * 3, obj.Pos.Y);
-
-                Console.Write($" {obj.Symbol} ");
-            }
+            Console.ForegroundColor = square.Color;
+            Console.Write($" {square.Symbol} ");
         }
 
-        if (resetedList)
-        {
-            _highlightedSquares.Clear();
-        }
+        _activeLegalMoves.Clear();
 
         Console.SetCursorPosition(x, y);
-
         Console.ResetColor();
     }
 
-    private void UpdatePiecesPositionFeedback()
+    private void DisplayLegalMoves()
     {
-        for (int i = 0; i < 8; i++)
+        if (!Cursor.IsHoldingChessPiece)
         {
-            for (int j = 0; j < 8; j++)
+            return;
+        }
+
+        (int x, int y) = Console.GetCursorPosition();
+
+        _activeLegalMoves.Clear();
+
+        foreach (var square in BoardObjects)
+        {
+            if (square.BackgroundColor is not ConsoleColor color)
             {
-                if (BoardObjects[i, j] != _lastBoardObjects[i, j] && BoardObjects[i, j] is not Blank)
+                continue;
+            }
+
+            Console.SetCursorPosition(square.Pos.X * 3, square.Pos.Y);
+
+            // Cursor is above THIS highlighted square
+            if (square.Pos == Cursor.Pos)
+            {
+                Console.BackgroundColor = Colors.Square["AllowedMovement"];
+                Console.ForegroundColor = Colors.Default["White"];
+                Console.Write($" {Cursor.Symbol} ");
+            }
+            else
+            {
+                Console.BackgroundColor = color;
+                Console.ForegroundColor = Colors.Default["Black"];
+                Console.Write($" {square.Symbol} ");
+            }
+
+            _activeLegalMoves.Add(new(square.Pos.X, square.Pos.Y));
+        }
+
+        Console.SetCursorPosition(x, y);
+        Console.ResetColor();
+    }
+
+    private void UpdatePiecesPosition()
+    {
+        for (var i = 0; i < 8; i++)
+        {
+            for (var j = 0; j < 8; j++)
+            {
+                if (BoardObjects[i, j] == _lastBoardObjects[i, j] || BoardObjects[i, j] is Blank)
                 {
-                    Console.ResetColor();
-
-                    (var x, var y) = Console.GetCursorPosition();
-
-                    var oldPiecePos = _lastBoardObjects[i, j].Pos;
-                    var newPiecePos = BoardObjects[i, j].Pos;
-
-                    // Draws a blank on the old piece position
-                    Console.SetCursorPosition(oldPiecePos.X * 3, oldPiecePos.Y);
-
-                    Console.ForegroundColor = Colors.Square["Blank"];
-                    Console.Write($" {Symbols.Square[SquareObject.Blank]} ");
-
-                    // Draws the piece on the new position
-                    Console.SetCursorPosition(newPiecePos.X * 3, newPiecePos.Y);
-
-                    Console.ForegroundColor = BoardObjects[i, j].Color;
-                    Console.Write($" {BoardObjects[i, j].Symbol} ");
-
-                    Console.SetCursorPosition(x, y);
-
-                    Array.Copy(BoardObjects, _lastBoardObjects, BoardObjects.Length);
-
-                    Console.ResetColor();
-                    return;
+                    continue;
                 }
+
+                Console.ResetColor();
+
+                (var x, var y) = Console.GetCursorPosition();
+
+                var oldPiecePos = _lastBoardObjects[i, j].Pos;
+                var newPiecePos = BoardObjects[i, j].Pos;
+
+                // Draws a blank on the old piece position
+                Console.SetCursorPosition(oldPiecePos.X * 3, oldPiecePos.Y);
+
+                Console.ForegroundColor = Colors.Square["Blank"];
+                Console.Write($" {Symbols.Square[SquareObject.Blank]} ");
+
+                // Draws the piece on the new position
+                Console.SetCursorPosition(newPiecePos.X * 3, newPiecePos.Y);
+
+                Console.ForegroundColor = BoardObjects[i, j].Color;
+                Console.Write($" {BoardObjects[i, j].Symbol} ");
+
+                Array.Copy(BoardObjects, _lastBoardObjects, BoardObjects.Length);
+
+                Console.SetCursorPosition(x, y);
+                Console.ResetColor();
+
+                return;
             }
         }
     }

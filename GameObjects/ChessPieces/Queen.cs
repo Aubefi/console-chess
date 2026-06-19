@@ -13,7 +13,7 @@ public class Queen(char symbol, ConsoleColor color, int x, int y) : ChessPiece(s
         var a = (x: 1, y: 0);
         var b = (x: 1, y: 1);
 
-        for (int k = 0; k < 4; k++)
+        for (var k = 0; k < 4; k++)
         {
             var posA = new Position(Pos.X + a.x, Pos.Y + a.y);
             var posB = new Position(Pos.X + b.x, Pos.Y + b.y);

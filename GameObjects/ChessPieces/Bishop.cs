@@ -12,7 +12,7 @@ public class Bishop(char symbol, ConsoleColor color, int x, int y) : ChessPiece(
 
         var a = (x: 1, y: 1);
 
-        for (int k = 0; k < 4; k++)
+        for (var k = 0; k < 4; k++)
         {
             var pos = new Position(Pos.X + a.x, Pos.Y + a.y);
 

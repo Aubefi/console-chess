@@ -9,7 +9,7 @@ public sealed class Gameplay : BaseScene
     public override List<BaseBehavior> Behaviors { get; protected set; } = [];
 
     private readonly Board _board = new();
-    private readonly BoardCursor _boardCursor = new(char.MinValue, Colors.Default["Gray"], 0, 0);
+    private readonly BoardCursor _boardCursor = new(char.MinValue, Colors.Cursor["Foreground"], 4, 3);
 
     private readonly BoardRenderer _boardRenderer = new();
     private readonly BoardNavigation _boardNavigation = new();
@@ -17,7 +17,7 @@ public sealed class Gameplay : BaseScene
 
     public Gameplay()
     {
-        _boardCursor.SetBackgroundColor(Colors.Cursor["Default"]);
+        _boardCursor.SetBackgroundColor(Colors.Cursor["Background"]);
 
         InitializeBehaviors();
         InitializeDependencies();

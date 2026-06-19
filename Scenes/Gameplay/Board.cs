@@ -10,7 +10,9 @@ public class Board : BaseBehavior
     public readonly BaseUIObject[,] BoardObjects = new BaseUIObject[8, 8];
 
     public override void Start()
-        => BuildGameplayBoard();
+    {
+        BuildGameplayBoard();
+    }
 
     private void BuildGameplayBoard()
     {
@@ -21,29 +23,30 @@ public class Board : BaseBehavior
 
         var symbols = Symbols.Square;
 
-        for (int i = 0; i < 8; i++)
+        for (var k = 0; k < 8; k++)
         {
             // Black pieces
-            BoardObjects[0, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], Colors.Pieces["Black"], i, 0);
+            BoardObjects[0, k] = CreatePiece(piecesOrder[k], symbols[piecesOrder[k]], Colors.Pieces["Black"], k, 0);
 
             // Black pawns
-            BoardObjects[1, i] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], Colors.Pieces["Black"], i, 1);
-            SetPawnDirection(BoardObjects[1, i], PawnDirection.Black);
+            BoardObjects[1, k] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], Colors.Pieces["Black"], k, 1);
+            SetPawnDirection(BoardObjects[1, k], PawnDirection.Black);
 
             // White pawns
-            BoardObjects[6, i] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], Colors.Pieces["White"], i, 6);
-            SetPawnDirection(BoardObjects[6, i], PawnDirection.White);
+            BoardObjects[6, k] = CreatePiece(SquareObject.Pawn, symbols[SquareObject.Pawn], Colors.Pieces["White"], k, 6);
+            SetPawnDirection(BoardObjects[6, k], PawnDirection.White);
 
             // White pieces
-            BoardObjects[7, i] = CreatePiece(piecesOrder[i], symbols[piecesOrder[i]], Colors.Pieces["White"], i, 7);
+            BoardObjects[7, k] = CreatePiece(piecesOrder[k], symbols[piecesOrder[k]], Colors.Pieces["White"], k, 7);
         }
 
-        for (int i = 2; i < 6; i++)
+        for (var i = 2; i < 6; i++)
         {
-            for (int j = 0; j < 8; j++)
+            for (var j = 0; j < 8; j++)
             {
-                BoardObjects[i, j]
-                    = CreatePiece(SquareObject.Blank, symbols[SquareObject.Blank], Colors.Square["Blank"], j, i);
+                BoardObjects[i, j] = CreatePiece(
+                    SquareObject.Blank, symbols[SquareObject.Blank], Colors.Square["Blank"], j, i
+                );
             }
         }
     }
@@ -62,9 +65,9 @@ public class Board : BaseBehavior
         };
     }
 
-    private static void SetPawnDirection(BaseUIObject obj, PawnDirection direction)
+    private static void SetPawnDirection(BaseUIObject square, PawnDirection direction)
     {
-        if (obj is Pawn pawn)
+        if (square is Pawn pawn)
         {
             pawn.SetPawnDirection(direction);
         }

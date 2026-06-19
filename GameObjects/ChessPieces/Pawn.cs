@@ -20,23 +20,26 @@ public class Pawn : ChessPiece
         _originalPosition = Pos;
     }
 
-    public PawnDirection Direction { get; private set; }
+    private PawnDirection _direction;
     public void SetPawnDirection(PawnDirection direction)
-        => Direction = direction;
+        => _direction = direction;
 
     protected override List<Position> CalculateMoves(BaseUIObject[,] boardObjects)
     {
-        var list = new List<Position>
-        {
-            new(Pos.X, Pos.Y + (int)Direction)
-        };
+        var list = new List<Position>();
 
-        if (!HasMoved)
+        var posA = new Position(Pos.X, Pos.Y + (int)_direction);
+        var posB = new Position(Pos.X, Pos.Y + (int)_direction * 2);
+
+        if (IsPositionInsideBoard(posA) && !IsPositionOccupied(boardObjects, posA))
         {
-            list.Add(new(Pos.X, Pos.Y + (int)Direction * 2));
+            list.Add(posA);
         }
 
-        list.RemoveAll(p => !IsPositionInsideBoard(p) || IsPositionOccupied(boardObjects, p));
+        if (!HasMoved && list.Count != 0 && IsPositionInsideBoard(posB) && !IsPositionOccupied(boardObjects, posB))
+        {
+            list.Add(posB);
+        }
 
         return list;
     }

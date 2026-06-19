@@ -8,7 +8,7 @@ public class Bishop(char symbol, ConsoleColor color, int x, int y) : ChessPiece(
 {
     protected override List<Position> CalculateMoves(BaseUIObject[,] boardObjects)
     {
-        var list = new List<Position>();
+        var moves = new List<Position>();
 
         var a = (x: 1, y: 1);
 
@@ -21,7 +21,7 @@ public class Bishop(char symbol, ConsoleColor color, int x, int y) : ChessPiece(
 
             while (IsPositionInsideBoard(pos) && !IsPositionOccupied(boardObjects, pos))
             {
-                list.Add(pos);
+                moves.Add(pos);
 
                 sumX += a.x;
                 sumY += a.y;
@@ -32,6 +32,6 @@ public class Bishop(char symbol, ConsoleColor color, int x, int y) : ChessPiece(
             (a.x, a.y) = (-a.y, a.x);
         }
 
-        return list;
+        return moves;
     }
 }

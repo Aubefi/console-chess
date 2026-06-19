@@ -10,9 +10,9 @@ public class Board : BaseBehavior
     public readonly BaseUIObject[,] BoardObjects = new BaseUIObject[8, 8];
 
     public override void Start()
-        => BuildBaseGridObjects();
+        => BuildGameplayBoard();
 
-    private void BuildBaseGridObjects()
+    private void BuildGameplayBoard()
     {
         SquareObject[] piecesOrder = [
             SquareObject.Rook, SquareObject.Knight, SquareObject.Bishop, SquareObject.Queen,

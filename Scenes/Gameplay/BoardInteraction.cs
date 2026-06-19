@@ -20,7 +20,7 @@ public sealed class BoardInteraction
         {
             if (interactedObject is ChessPiece piece)
             {
-                TryCapturePiece();
+                TryCapturePiece(piece);
             }
             else
             {
@@ -33,27 +33,55 @@ public sealed class BoardInteraction
         }
     }
 
-    private void TryCapturePiece()
+    private void TryCapturePiece(ChessPiece piece)
     {
-        Cursor.SetSymbol(char.MinValue);
-        Cursor.SetBackgroundColor(Colors.Cursor["Default"]);
-        Cursor.SetColor(Colors.Default["Gray"]);
+        ResetCursorVisuals();
 
-        var legalMovesPos = Cursor.SelectedPiece?.GetLegalMoves(BoardObjects);
-
-        if (legalMovesPos is not null)
-        {
-            foreach (var pos in legalMovesPos)
-            {
-                BoardObjects[pos.Y, pos.X].RemoveBackgroundColor();
-            }
-        }
+        RemovePieceLegalMovesVisual();
 
         Cursor.SelectedPiece = null;
     }
 
     private void TryMovePiece()
     {
+        ResetCursorVisuals();
+
+        var isMoveLegal = false;
+
+        var legalMoves = Cursor.SelectedPiece!.GetLegalMoves(BoardObjects);
+
+        foreach (var pos in legalMoves)
+        {
+            // Checks if the player is trying to move to a legal position
+            if (Cursor.Pos == pos)
+            {
+                isMoveLegal = true;
+            }
+
+            BoardObjects[pos.Y, pos.X].RemoveBackgroundColor();
+        }
+
+        if (isMoveLegal)
+        {
+            var targetX = Cursor.Pos.X;
+            var targetY = Cursor.Pos.Y;
+
+            var originX = Cursor.SelectedPiece.Pos.X;
+            var originY = Cursor.SelectedPiece.Pos.Y;
+
+            var targetBlank = (Blank)BoardObjects[targetY, targetX];
+            var originPiece = (ChessPiece)BoardObjects[originY, originX];
+
+            // Update the internal positions
+            targetBlank.SetPosition(new(originX, originY));
+            originPiece.SetPosition(new(targetX, targetY));
+
+            // Update the matrix
+            BoardObjects[targetY, targetX] = originPiece;
+            BoardObjects[originY, originX] = targetBlank;
+
+            Cursor.SelectedPiece = null;
+        }
     }
 
     private void HoldInteractedPiece(ChessPiece piece)
@@ -73,6 +101,26 @@ public sealed class BoardInteraction
         foreach (var pos in legalMoves)
         {
             BoardObjects[pos.Y, pos.X].SetBackgroundColor(Colors.Square["AllowedSquare"]);
+        }
+    }
+
+    private void ResetCursorVisuals()
+    {
+        Cursor.SetSymbol(char.MinValue);
+        Cursor.SetBackgroundColor(Colors.Cursor["Default"]);
+        Cursor.SetColor(Colors.Default["Gray"]);
+    }
+
+    private void RemovePieceLegalMovesVisual()
+    {
+        var legalMovesPos = Cursor.SelectedPiece?.GetLegalMoves(BoardObjects);
+
+        if (legalMovesPos is not null)
+        {
+            foreach (var pos in legalMovesPos)
+            {
+                BoardObjects[pos.Y, pos.X].RemoveBackgroundColor();
+            }
         }
     }
 }

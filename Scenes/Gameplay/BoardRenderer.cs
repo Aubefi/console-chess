@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Chess.Assets;
 using Chess.Engine.Bases;
+using Chess.GameObjects.ChessPieces;
 
 namespace Chess.Scenes.Gameplay;
 
@@ -12,10 +13,16 @@ public class BoardRenderer : BaseRenderer
     public BaseUIObject[,] BoardObjects { get; set; } = null!;
     public BoardCursor Cursor { get; set; } = null!;
 
+    private readonly BaseUIObject[,] _lastBoardObjects = new BaseUIObject[8, 8];
     private Position _lastCursorPos = new(0, 0);
     private bool _wasHoldingChessPiece = false;
 
     private readonly List<Position> _highlightedSquares = [];
+
+    public override void Start()
+    {
+        Array.Copy(BoardObjects, _lastBoardObjects, BoardObjects.Length);
+    }
 
     public override void Update()
     {
@@ -32,6 +39,7 @@ public class BoardRenderer : BaseRenderer
             CleanLastCursorPosition();
             UpdateCursorVisualFeedback();
             UpdateSquaresVisualFeedbacks();
+            UpdatePiecesPositionFeedback();
         }
 
         _lastCursorPos = Cursor.Pos;
@@ -40,7 +48,23 @@ public class BoardRenderer : BaseRenderer
     private bool CanRender()
         => (Cursor.Pos == _lastCursorPos && Cursor.IsHoldingChessPiece && !_wasHoldingChessPiece)
         || (Cursor.Pos == _lastCursorPos && !Cursor.IsHoldingChessPiece && _wasHoldingChessPiece)
-        || Cursor.Pos != _lastCursorPos;
+        || Cursor.Pos != _lastCursorPos
+        || SomePieceMoved();
+
+    private bool SomePieceMoved()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (BoardObjects[i, j] != _lastBoardObjects[i, j])
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public override void FirstRender()
     {
@@ -171,5 +195,43 @@ public class BoardRenderer : BaseRenderer
         Console.SetCursorPosition(x, y);
 
         Console.ResetColor();
+    }
+
+    private void UpdatePiecesPositionFeedback()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (BoardObjects[i, j] != _lastBoardObjects[i, j] && BoardObjects[i, j] is not Blank)
+                {
+                    Console.ResetColor();
+
+                    (var x, var y) = Console.GetCursorPosition();
+
+                    var oldPiecePos = _lastBoardObjects[i, j].Pos;
+                    var newPiecePos = BoardObjects[i, j].Pos;
+
+                    // Draws a blank on the old piece position
+                    Console.SetCursorPosition(oldPiecePos.X * 3, oldPiecePos.Y);
+
+                    Console.ForegroundColor = Colors.Square["Blank"];
+                    Console.Write($" {Symbols.Square[SquareObject.Blank]} ");
+
+                    // Draws the piece on the new position
+                    Console.SetCursorPosition(newPiecePos.X * 3, newPiecePos.Y);
+
+                    Console.ForegroundColor = BoardObjects[i, j].Color;
+                    Console.Write($" {BoardObjects[i, j].Symbol} ");
+
+                    Console.SetCursorPosition(x, y);
+
+                    Array.Copy(BoardObjects, _lastBoardObjects, BoardObjects.Length);
+
+                    Console.ResetColor();
+                    return;
+                }
+            }
+        }
     }
 }

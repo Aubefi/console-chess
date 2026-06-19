@@ -19,6 +19,7 @@ public sealed class Game
         _gameState.Initialize();
 
         Console.Clear();
+        Console.ResetColor();
         Console.CursorVisible = true;
     }
 }

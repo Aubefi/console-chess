@@ -9,10 +9,11 @@ public sealed class Gameplay : BaseScene
     public override List<BaseBehavior> Behaviors { get; protected set; } = [];
 
     private readonly Board _board = new();
+    private readonly BoardCursor _boardCursor = new(char.MinValue, Colors.Default["Gray"], 0, 0);
+
     private readonly BoardRenderer _boardRenderer = new();
     private readonly BoardNavigation _boardNavigation = new();
     private readonly BoardInteraction _boardInteraction = new();
-    private readonly BoardCursor _boardCursor = new(char.MinValue, Colors.Default["Gray"], 0, 0);
 
     public Gameplay()
     {

@@ -50,7 +50,6 @@ public sealed class BoardInteraction
         }
 
         Cursor.SelectedPiece = null;
-        Cursor.IsHoldingChessPiece = false;
     }
 
     private void TryMovePiece()
@@ -68,7 +67,6 @@ public sealed class BoardInteraction
 
         Cursor.SetColor(color);
         Cursor.SelectedPiece = piece;
-        Cursor.IsHoldingChessPiece = true;
 
         var legalMoves = piece.GetLegalMoves(BoardObjects);
 

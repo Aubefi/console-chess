@@ -66,7 +66,7 @@ public class BoardRenderer : BaseRenderer
         return false;
     }
 
-    public override void FirstRender()
+    protected override void FirstRender()
     {
         Console.SetCursorPosition(0, 0);
 

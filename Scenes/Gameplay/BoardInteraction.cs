@@ -16,7 +16,7 @@ public sealed class BoardInteraction
 
     private void HandleSquareInteraction(BaseUIObject interactedObject)
     {
-        if (Cursor.IsHoldingChessPiece)
+        if (Cursor.IsHoldingPiece)
         {
             if (interactedObject is ChessPiece piece)
             {

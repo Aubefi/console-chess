@@ -52,6 +52,7 @@ public class BoardRenderer : BaseRenderer
 
     protected override void FirstRender()
     {
+        Console.Clear();
         Console.SetCursorPosition(0, 0);
 
         for (var i = 0; i < 8; i++)

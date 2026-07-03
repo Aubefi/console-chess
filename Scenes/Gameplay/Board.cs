@@ -11,10 +11,10 @@ public class Board
 
     public Board()
     {
-        BuildGameplayBoard();
+        BuildBoardPieces();
     }
 
-    private void BuildGameplayBoard()
+    private void BuildBoardPieces()
     {
         SquareObject[] piecesOrder = [
             SquareObject.Rook, SquareObject.Knight, SquareObject.Bishop, SquareObject.Queen,

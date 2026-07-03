@@ -25,7 +25,6 @@ public sealed class Gameplay : BaseScene
 
     protected override void InitializeBehaviors()
     {
-        Behaviors.Add(_board);
         Behaviors.Add(_boardRenderer);
         Behaviors.Add(_boardNavigation);
     }

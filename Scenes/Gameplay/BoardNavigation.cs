@@ -58,6 +58,7 @@ public class BoardNavigation : BaseBehavior
 
             case ConsoleKey.Spacebar:
             case ConsoleKey.Enter:
+                Cursor.SetPosition(new(Cursor.Pos.X, Cursor.Pos.Y));
                 var interactedObject = BoardObjects[Cursor.Pos.Y, Cursor.Pos.X];
                 SquareInteractionEvent?.Invoke(interactedObject);
                 break;

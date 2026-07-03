@@ -29,37 +29,25 @@ public class BoardRenderer : BaseRenderer
             return;
         }
 
-        if (CanRender())
+        if (Cursor.HasMoved)
         {
             ClearLastCursorPosition();
             DisplayNewCursorPosition();
-            DisplayLegalMoves();
-            HideLegalMoves();
-            UpdatePiecesPosition();
-            DisplayNewCursorPosition(); // <- Only happens again if cursor has moved a piece
         }
-    }
 
-    private bool CanRender()
-        => Cursor.HasPickedPieceUp
-        || Cursor.HasMovedPiece
-        || Cursor.IsMovingPieceAround
-        || Cursor.HasMoved
-        || SomePieceMoved();
-
-    private bool SomePieceMoved()
-    {
-        for (var i = 0; i < 8; i++)
+        if (!Cursor.IsHoldingPiece && _activeLegalMoves.Count > 0)
         {
-            for (var j = 0; j < 8; j++)
-            {
-                if (BoardObjects[i, j] != _lastBoardObjects[i, j])
-                {
-                    return true;
-                }
-            }
+            HideLegalMoves();
         }
-        return false;
+        else
+        {
+            DisplayLegalMoves();
+        }
+
+        if (Cursor.HasMovedPiece)
+        {
+            UpdatePiecesPosition();
+        }
     }
 
     protected override void FirstRender()
@@ -93,11 +81,6 @@ public class BoardRenderer : BaseRenderer
 
     private void ClearLastCursorPosition()
     {
-        if (!Cursor.HasMoved)
-        {
-            return;
-        }
-
         Console.ResetColor();
 
         Console.SetCursorPosition(Cursor.LastPosition.X * 3, Cursor.LastPosition.Y);
@@ -112,11 +95,6 @@ public class BoardRenderer : BaseRenderer
 
     private void DisplayNewCursorPosition()
     {
-        if (!Cursor.HasMoved && !Cursor.HasMovedPiece)
-        {
-            return;
-        }
-
         Console.ResetColor();
 
         Console.SetCursorPosition(Cursor.Pos.X * 3, Cursor.Pos.Y);
@@ -132,10 +110,9 @@ public class BoardRenderer : BaseRenderer
             ? Cursor.Color
             : square.Color;
 
-        // Cursor.Symbol being char.MinValue means he is NOT holding a chess piece
-        var symbol = Cursor.Symbol is char.MinValue
-            ? square.Symbol
-            : Cursor.Symbol;
+        var symbol = Cursor.IsHoldingPiece
+            ? Cursor.Symbol
+            : square.Symbol;
 
         Console.Write($" {symbol} ");
 
@@ -144,11 +121,6 @@ public class BoardRenderer : BaseRenderer
 
     private void HideLegalMoves()
     {
-        if (Cursor.IsHoldingPiece || _activeLegalMoves.Count == 0)
-        {
-            return;
-        }
-
         (int x, int y) = Console.GetCursorPosition();
 
         foreach (var pos in _activeLegalMoves)
@@ -168,11 +140,6 @@ public class BoardRenderer : BaseRenderer
 
     private void DisplayLegalMoves()
     {
-        if (!Cursor.IsHoldingPiece)
-        {
-            return;
-        }
-
         (int x, int y) = Console.GetCursorPosition();
 
         _activeLegalMoves.Clear();
@@ -233,6 +200,11 @@ public class BoardRenderer : BaseRenderer
 
                 // Draws the piece on the new position
                 Console.SetCursorPosition(newPiecePos.X * 3, newPiecePos.Y);
+
+                if (Cursor.BackgroundColor is ConsoleColor backgroundColor)
+                {
+                    Console.BackgroundColor = backgroundColor;
+                }
 
                 Console.ForegroundColor = BoardObjects[i, j].Color;
                 Console.Write($" {BoardObjects[i, j].Symbol} ");

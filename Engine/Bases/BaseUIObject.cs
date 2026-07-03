@@ -20,7 +20,7 @@ public abstract class BaseUIObject(char symbol, ConsoleColor color, int x, int y
     public virtual void RemoveBackgroundColor()
         => BackgroundColor = null;
 
-    public virtual Position Pos { get; protected set; } = new Position(x, y);
+    public virtual Position Pos { get; protected set; } = new(x, y);
     public virtual void SetPosition(Position pos)
         => Pos = pos;
 }

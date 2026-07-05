@@ -74,13 +74,14 @@ public sealed class BoardInteraction
         var originX = Cursor.GrabbedPiece.Pos.X;
         var originY = Cursor.GrabbedPiece.Pos.Y;
 
-        var originPiece = (ChessPiece)BoardObjects[originY, originX];
+        var capturedPiece = BoardObjects[targetY, targetX];
+        capturedPiece.SetPosition(new(originX, originY));
 
-        originPiece.SetPosition(new(targetX, targetY));
-
-        BoardObjects[targetY, targetX] = originPiece;
+        var attackerPiece = BoardObjects[originY, originX];
+        attackerPiece.SetPosition(new(targetX, targetY));
 
         BoardObjects[originY, originX] = new Blank(originX, originY);
+        BoardObjects[targetY, targetX] = attackerPiece;
 
         Cursor.GrabbedPiece = null;
 

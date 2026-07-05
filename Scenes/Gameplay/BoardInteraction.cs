@@ -20,45 +20,45 @@ public sealed class BoardInteraction
     {
         if (Cursor.IsHoldingPiece)
         {
-            if (interactedObject is ChessPiece piece && interactedObject.Color != State.CurrentPlayerColor)
+            if (interactedObject == Cursor.GrabbedPiece)
             {
-                // TryCapturePiece(piece);
+                CancelGrab();
+                return;
             }
-            else
+
+            bool isMoveSuccessful = interactedObject is ChessPiece && interactedObject.Color != State.CurrentPlayerColor
+                ? TryCapturePiece()
+                : TryMovePiece();
+
+            if (isMoveSuccessful)
             {
-                TryMovePiece();
+                State.IsWhiteToMove = !State.IsWhiteToMove;
             }
-            State.IsWhiteToMove = !State.IsWhiteToMove;
         }
         else if (interactedObject is ChessPiece piece && interactedObject.Color == State.CurrentPlayerColor)
         {
-            GrabPiece(piece);
+            TryGrabPiece(piece);
         }
     }
 
-    private void TryCapturePiece(ChessPiece piece)
+    private void CancelGrab()
     {
         ResetCursor();
 
-        if (Cursor.GrabbedPiece is not null)
+        foreach (var pos in Cursor.GrabbedPiece!.GetLegalMoves(BoardObjects))
         {
-            var legalMoves = Cursor.GrabbedPiece.GetLegalMoves(BoardObjects);
-
-            foreach (var pos in legalMoves)
-            {
-                BoardObjects[pos.Y, pos.X].RemoveBackgroundColor();
-            }
+            BoardObjects[pos.Y, pos.X].RemoveBackgroundColor();
         }
         Cursor.GrabbedPiece = null;
     }
 
-    private void TryMovePiece()
+    private bool TryCapturePiece()
     {
         var legalMoves = Cursor.GrabbedPiece!.GetLegalMoves(BoardObjects);
 
-        if (!legalMoves.Contains(Cursor.Pos))
+        if (legalMoves.Contains(Cursor.Pos) is false)
         {
-            return;
+            return false;
         }
 
         ResetCursor();
@@ -74,6 +74,40 @@ public sealed class BoardInteraction
         var originX = Cursor.GrabbedPiece.Pos.X;
         var originY = Cursor.GrabbedPiece.Pos.Y;
 
+        var originPiece = (ChessPiece)BoardObjects[originY, originX];
+
+        originPiece.SetPosition(new(targetX, targetY));
+
+        BoardObjects[targetY, targetX] = originPiece;
+
+        BoardObjects[originY, originX] = new Blank(originX, originY);
+
+        Cursor.GrabbedPiece = null;
+
+        return true;
+    }
+
+    private bool TryMovePiece()
+    {
+        var legalMoves = Cursor.GrabbedPiece!.GetLegalMoves(BoardObjects);
+
+        if (legalMoves.Contains(Cursor.Pos) is false)
+        {
+            return false;
+        }
+
+        ResetCursor();
+
+        foreach (var pos in legalMoves)
+        {
+            BoardObjects[pos.Y, pos.X].RemoveBackgroundColor();
+        }
+
+        var targetX = Cursor.Pos.X;
+        var targetY = Cursor.Pos.Y;
+        var originX = Cursor.GrabbedPiece.Pos.X;
+        var originY = Cursor.GrabbedPiece.Pos.Y;
+
         var targetBlank = (Blank)BoardObjects[targetY, targetX];
         var originPiece = (ChessPiece)BoardObjects[originY, originX];
 
@@ -86,15 +120,16 @@ public sealed class BoardInteraction
         BoardObjects[originY, originX] = targetBlank;
 
         Cursor.GrabbedPiece = null;
+        return true;
     }
 
-    private void GrabPiece(ChessPiece piece)
+    private bool TryGrabPiece(ChessPiece piece)
     {
         var legalMoves = piece.GetLegalMoves(BoardObjects);
 
         if (legalMoves.Count == 0)
         {
-            return;
+            return false;
         }
 
         foreach (var pos in legalMoves)
@@ -110,6 +145,8 @@ public sealed class BoardInteraction
         Cursor.GrabbedPiece = piece;
         Cursor.SetSymbol(piece.Symbol);
         Cursor.SetBackgroundColor(Colors.Cursor["PieceSelected"]);
+
+        return true;
     }
 
     private void ResetCursor()

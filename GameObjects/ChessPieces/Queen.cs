@@ -32,6 +32,10 @@ public class Queen(char symbol, ConsoleColor color, int x, int y) : ChessPiece(s
 
                 posA = new(Pos.X + sumAX, Pos.Y + sumAY);
             }
+            if (IsPositionInsideBoard(posA) && CanCaptureThisPiece(boardObjects, posA))
+            {
+                list.Add(posA);
+            }
 
             while (IsPositionInsideBoard(posB) && !IsPositionOccupied(boardObjects, posB))
             {
@@ -41,6 +45,10 @@ public class Queen(char symbol, ConsoleColor color, int x, int y) : ChessPiece(s
                 sumBY += b.y;
 
                 posB = new(Pos.X + sumBX, Pos.Y + sumBY);
+            }
+            if (IsPositionInsideBoard(posB) && CanCaptureThisPiece(boardObjects, posB))
+            {
+                list.Add(posB);
             }
 
             (a.x, a.y) = (-a.y, a.x);

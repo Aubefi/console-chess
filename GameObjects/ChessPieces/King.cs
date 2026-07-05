@@ -22,7 +22,9 @@ public class King(char symbol, ConsoleColor color, int x, int y) : ChessPiece(sy
             list.Add(new(Pos.X + b.x, Pos.Y + b.y));
         }
 
-        list.RemoveAll(p => !IsPositionInsideBoard(p) || IsPositionOccupied(boardObjects, p));
+        list.RemoveAll(p => !IsPositionInsideBoard(p)
+            || IsPositionOccupied(boardObjects, p)
+            && !CanCaptureThisPiece(boardObjects, p));
 
         return list;
     }

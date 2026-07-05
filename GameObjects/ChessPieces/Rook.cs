@@ -28,6 +28,10 @@ public class Rook(char symbol, ConsoleColor color, int x, int y) : ChessPiece(sy
 
                 pos = new(Pos.X + sumX, Pos.Y + sumY);
             }
+            if (IsPositionInsideBoard(pos) && CanCaptureThisPiece(boardObjects, pos))
+            {
+                list.Add(pos);
+            }
 
             (a.x, a.y) = (-a.y, a.x);
         }

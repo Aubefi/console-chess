@@ -41,6 +41,21 @@ public class Pawn : ChessPiece
             list.Add(posB);
         }
 
+        var posC = new Position(Pos.X + 1, Pos.Y + (int)_direction);
+        var posD = new Position(Pos.X - 1, Pos.Y + (int)_direction);
+
+        if (IsPositionInsideBoard(posC) && IsPositionOccupied(boardObjects, posC)
+            && CanCaptureThisPiece(boardObjects, posC))
+        {
+            list.Add(posC);
+        }
+
+        if (IsPositionInsideBoard(posD) && IsPositionOccupied(boardObjects, posD)
+            && CanCaptureThisPiece(boardObjects, posD))
+        {
+            list.Add(posD);
+        }
+
         return list;
     }
 }

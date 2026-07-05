@@ -13,6 +13,9 @@ public abstract class ChessPiece(char symbol, ConsoleColor color, int x, int y) 
     protected static bool IsPositionOccupied(BaseUIObject[,] boardObjects, Position pos)
         => boardObjects[pos.Y, pos.X] is ChessPiece;
 
+    protected bool CanCaptureThisPiece(BaseUIObject[,] boardObjects, Position pos)
+        => boardObjects[pos.Y, pos.X] is ChessPiece piece && piece.Color != Color;
+
     protected abstract List<Position> CalculateMoves(BaseUIObject[,] boardObjects);
 
     public List<Position> GetLegalMoves(BaseUIObject[,] boardObjects)

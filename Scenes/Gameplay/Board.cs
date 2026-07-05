@@ -44,9 +44,7 @@ public class Board
         {
             for (var j = 0; j < 8; j++)
             {
-                BoardObjects[i, j] = CreatePiece(
-                    SquareObject.Blank, symbols[SquareObject.Blank], Colors.Square["Blank"], j, i
-                );
+                BoardObjects[i, j] = new Blank(j, i);
             }
         }
     }
@@ -60,8 +58,7 @@ public class Board
             SquareObject.Rook => new Rook(symbol, color, x, y),
             SquareObject.Knight => new Knight(symbol, color, x, y),
             SquareObject.Bishop => new Bishop(symbol, color, x, y),
-            SquareObject.Pawn => new Pawn(symbol, color, x, y),
-            _ => new Blank(symbol, color, x, y)
+            _ => new Pawn(symbol, color, x, y)
         };
     }
 

@@ -10,6 +10,8 @@ public class BoardNavigation : BaseBehavior
 
     public static event Action<BaseUIObject>? SquareInteractionEvent;
 
+    public static event Action? RedrawBoardEvent;
+
     public override void Update()
     {
         var input = Console.ReadKey(true);
@@ -61,6 +63,10 @@ public class BoardNavigation : BaseBehavior
                 Cursor.SetPosition(new(Cursor.Pos.X, Cursor.Pos.Y));
                 var interactedObject = BoardObjects[Cursor.Pos.Y, Cursor.Pos.X];
                 SquareInteractionEvent?.Invoke(interactedObject);
+                break;
+
+            case ConsoleKey.R:
+                RedrawBoardEvent?.Invoke();
                 break;
 
             default:

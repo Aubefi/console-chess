@@ -9,6 +9,8 @@ public sealed class BoardInteraction
     public BaseUIObject[,] BoardObjects { get; set; } = null!;
     public BoardCursor Cursor { get; set; } = null!;
 
+    public GameplayState State { get; set; } = null!;
+
     public BoardInteraction()
     {
         BoardNavigation.SquareInteractionEvent += HandleSquareInteraction;
@@ -18,16 +20,17 @@ public sealed class BoardInteraction
     {
         if (Cursor.IsHoldingPiece)
         {
-            if (interactedObject is ChessPiece piece)
+            if (interactedObject is ChessPiece piece && interactedObject.Color != State.CurrentPlayerColor)
             {
-                TryCapturePiece(piece);
+                // TryCapturePiece(piece);
             }
             else
             {
                 TryMovePiece();
             }
+            State.IsWhiteToMove = !State.IsWhiteToMove;
         }
-        else if (interactedObject is ChessPiece piece)
+        else if (interactedObject is ChessPiece piece && interactedObject.Color == State.CurrentPlayerColor)
         {
             GrabPiece(piece);
         }
@@ -87,23 +90,26 @@ public sealed class BoardInteraction
 
     private void GrabPiece(ChessPiece piece)
     {
-        Cursor.GrabbedPiece = piece;
+        var legalMoves = piece.GetLegalMoves(BoardObjects);
 
-        Cursor.SetSymbol(piece.Symbol);
-        Cursor.SetBackgroundColor(Colors.Cursor["PieceSelected"]);
+        if (legalMoves.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var pos in legalMoves)
+        {
+            BoardObjects[pos.Y, pos.X].SetBackgroundColor(Colors.Square["AllowedSquare"]);
+        }
 
         var newCursorColor = piece.Color == Colors.Pieces["White"]
             ? Colors.Pieces["WhiteSelected"]
             : Colors.Pieces["BlackSelected"];
 
         Cursor.SetColor(newCursorColor);
-
-        var legalMoves = piece.GetLegalMoves(BoardObjects);
-
-        foreach (var pos in legalMoves)
-        {
-            BoardObjects[pos.Y, pos.X].SetBackgroundColor(Colors.Square["AllowedSquare"]);
-        }
+        Cursor.GrabbedPiece = piece;
+        Cursor.SetSymbol(piece.Symbol);
+        Cursor.SetBackgroundColor(Colors.Cursor["PieceSelected"]);
     }
 
     private void ResetCursor()

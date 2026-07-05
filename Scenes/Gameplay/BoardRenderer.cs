@@ -19,6 +19,8 @@ public class BoardRenderer : BaseRenderer
     public override void Start()
     {
         Array.Copy(BoardObjects, _lastBoardObjects, BoardObjects.Length);
+
+        BoardNavigation.RedrawBoardEvent += FirstRender;
     }
 
     public override void Update()

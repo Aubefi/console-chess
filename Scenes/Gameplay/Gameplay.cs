@@ -15,6 +15,8 @@ public sealed class Gameplay : BaseScene
     private readonly BoardNavigation _boardNavigation = new();
     private readonly BoardInteraction _boardInteraction = new();
 
+    private readonly GameplayState _gameplayState = new();
+
     public Gameplay()
     {
         _boardCursor.SetBackgroundColor(Colors.Cursor["Background"]);
@@ -38,5 +40,7 @@ public sealed class Gameplay : BaseScene
         _boardRenderer.BoardObjects = _board.BoardObjects;
         _boardNavigation.BoardObjects = _board.BoardObjects;
         _boardInteraction.BoardObjects = _board.BoardObjects;
+
+        _boardInteraction.State = _gameplayState;
     }
 }

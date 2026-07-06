@@ -6,7 +6,7 @@ using Chess.GameObjects.ChessPieces;
 
 namespace Chess.Scenes.Gameplay;
 
-public class BoardRenderer : BaseRenderer
+public sealed class BoardRenderer : BaseRenderer
 {
     public BaseUIObject[,] BoardObjects { get; set; } = null!;
     public BoardCursor Cursor { get; set; } = null!;

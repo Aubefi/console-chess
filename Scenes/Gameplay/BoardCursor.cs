@@ -4,7 +4,7 @@ using Chess.GameObjects.ChessPieces;
 
 namespace Chess.Scenes.Gameplay;
 
-public class BoardCursor : BaseCursor
+public sealed class BoardCursor : BaseCursor
 {
     public override Position Pos
     {

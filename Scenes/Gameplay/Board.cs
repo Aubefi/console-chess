@@ -5,7 +5,7 @@ using Chess.GameObjects.ChessPieces;
 
 namespace Chess.Scenes.Gameplay;
 
-public class Board
+public sealed class Board
 {
     public readonly BaseUIObject[,] BoardObjects = new BaseUIObject[8, 8];
 

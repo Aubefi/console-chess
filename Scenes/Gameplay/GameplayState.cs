@@ -3,7 +3,7 @@ using Chess.Assets;
 
 namespace Chess.Scenes.Gameplay;
 
-public class GameplayState
+public sealed class GameplayState
 {
     public ConsoleColor CurrentPlayerColor { get; private set; } = Colors.Pieces["White"];
 

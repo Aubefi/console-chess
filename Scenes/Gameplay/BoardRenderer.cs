@@ -8,8 +8,6 @@ namespace Chess.Scenes.Gameplay;
 
 public class BoardRenderer : BaseRenderer
 {
-    protected override bool IsFirstRender { get; set; } = true;
-
     public BaseUIObject[,] BoardObjects { get; set; } = null!;
     public BoardCursor Cursor { get; set; } = null!;
 

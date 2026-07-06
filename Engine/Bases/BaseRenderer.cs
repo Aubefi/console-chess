@@ -2,6 +2,6 @@ namespace Chess.Engine.Bases;
 
 public abstract class BaseRenderer : BaseBehavior
 {
-    protected abstract bool IsFirstRender { get; set; }
+    protected virtual bool IsFirstRender { get; set; } = true;
     protected abstract void FirstRender();
 }

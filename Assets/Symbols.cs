@@ -2,10 +2,7 @@ using System.Collections.Generic;
 
 namespace Chess.Assets;
 
-public enum SquareObject
-{
-    Blank, Pawn, Bishop, Knight, Rook, Queen, King
-}
+public enum SquareObject { Blank, Pawn, Bishop, Knight, Rook, Queen, King }
 
 public static class Symbols
 {

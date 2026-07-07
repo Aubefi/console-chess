@@ -22,9 +22,7 @@ public sealed class GameplayInputs : BaseBehavior
             case ConsoleKey.W:
                 if (Cursor.Pos.Y > 0)
                 {
-                    Cursor.SetPosition(
-                        new(Cursor.Pos.X, Cursor.Pos.Y - 1)
-                    );
+                    Cursor.SetPosition(new(Cursor.Pos.X, Cursor.Pos.Y - 1));
                 }
                 break;
 
@@ -32,9 +30,7 @@ public sealed class GameplayInputs : BaseBehavior
             case ConsoleKey.S:
                 if (Cursor.Pos.Y < 7)
                 {
-                    Cursor.SetPosition(
-                        new(Cursor.Pos.X, Cursor.Pos.Y + 1)
-                    );
+                    Cursor.SetPosition(new(Cursor.Pos.X, Cursor.Pos.Y + 1));
                 }
                 break;
 
@@ -42,9 +38,7 @@ public sealed class GameplayInputs : BaseBehavior
             case ConsoleKey.A:
                 if (Cursor.Pos.X > 0)
                 {
-                    Cursor.SetPosition(
-                        new(Cursor.Pos.X - 1, Cursor.Pos.Y)
-                    );
+                    Cursor.SetPosition(new(Cursor.Pos.X - 1, Cursor.Pos.Y));
                 }
                 break;
 
@@ -52,9 +46,7 @@ public sealed class GameplayInputs : BaseBehavior
             case ConsoleKey.D:
                 if (Cursor.Pos.X < 7)
                 {
-                    Cursor.SetPosition(
-                        new(Cursor.Pos.X + 1, Cursor.Pos.Y)
-                    );
+                    Cursor.SetPosition(new(Cursor.Pos.X + 1, Cursor.Pos.Y));
                 }
                 break;
 

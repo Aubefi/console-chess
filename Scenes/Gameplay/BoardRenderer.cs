@@ -18,7 +18,7 @@ public sealed class BoardRenderer : BaseRenderer
     {
         Array.Copy(BoardObjects, _lastBoardObjects, BoardObjects.Length);
 
-        BoardNavigation.RedrawBoardEvent += FirstRender;
+        GameplayInputs.RedrawBoardEvent += FirstRender;
     }
 
     public override void Update()

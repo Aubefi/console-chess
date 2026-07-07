@@ -13,7 +13,7 @@ public sealed class BoardInteraction
 
     public BoardInteraction()
     {
-        BoardNavigation.SquareInteractionEvent += HandleSquareInteraction;
+        GameplayInputs.SquareInteractionEvent += HandleSquareInteraction;
     }
 
     private void HandleSquareInteraction(BaseUIObject interactedObject)

@@ -3,7 +3,7 @@ using Chess.Engine.Bases;
 
 namespace Chess.Scenes.Gameplay;
 
-public sealed class BoardNavigation : BaseBehavior
+public sealed class GameplayInputs : BaseBehavior
 {
     public BaseUIObject[,] BoardObjects { get; set; } = null!;
     public BoardCursor Cursor { get; set; } = null!;

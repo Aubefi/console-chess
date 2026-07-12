@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Chess.Assets;
 using Chess.Engine.Bases;
 
@@ -6,8 +5,6 @@ namespace Chess.Scenes.Gameplay;
 
 public sealed class Gameplay : BaseScene
 {
-    public override List<BaseBehavior> Behaviors { get; protected set; } = [];
-
     private readonly Board _board = new();
     private readonly BoardCursor _boardCursor = new(char.MinValue, Colors.Cursor["Foreground"], 4, 3);
 

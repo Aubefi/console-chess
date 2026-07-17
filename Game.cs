@@ -5,8 +5,6 @@ namespace Chess;
 
 public sealed class Game
 {
-    private readonly GameState _gameState = new();
-
     public Game()
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -14,9 +12,9 @@ public sealed class Game
         Console.CursorVisible = false;
     }
 
-    public void Run()
+    public static void Run()
     {
-        _gameState.Initialize();
+        new GameState().Initialize();
 
         Console.Clear();
         Console.ResetColor();

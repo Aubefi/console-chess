@@ -53,6 +53,7 @@ public sealed class BoardRenderer : BaseRenderer
     protected override void FirstRender()
     {
         Console.Clear();
+        Console.ResetColor();
         Console.SetCursorPosition(0, 0);
 
         for (var i = 0; i < 8; i++)

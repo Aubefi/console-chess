@@ -4,11 +4,7 @@ using Chess.Engine.Bases;
 
 namespace Chess.GameObjects.ChessPieces;
 
-public enum PawnDirection
-{
-    Black = 1,
-    White = -1
-}
+public enum PawnDirection { Black = 1, White = -1 }
 
 public class Pawn : ChessPiece
 {

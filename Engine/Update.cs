@@ -25,6 +25,8 @@ public sealed class Update : BaseState
                 {
                     break;
                 }
+
+                Input.ReadInput();
             }
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using Chess.Engine;
 using Chess.Engine.Bases;
 
 namespace Chess.Scenes.Gameplay;
@@ -10,59 +11,56 @@ public sealed class GameplayInputs : BaseBehavior
 
     public static event Action<BaseUIObject>? SquareInteractionEvent;
 
-    public static event Action? RedrawBoardEvent;
-
-    public override void Update()
+    public GameplayInputs()
     {
-        var input = Console.ReadKey(true);
+        Input.InputAction += InputAction;
+    }
 
-        switch (input.Key)
+    private void InputAction(InputMap input)
+    {
+        switch (input)
         {
-            case ConsoleKey.UpArrow:
-            case ConsoleKey.W:
+            case InputMap.Up:
                 if (Cursor.Pos.Y > 0)
                 {
                     Cursor.SetPosition(new(Cursor.Pos.X, Cursor.Pos.Y - 1));
                 }
                 break;
 
-            case ConsoleKey.DownArrow:
-            case ConsoleKey.S:
-                if (Cursor.Pos.Y < 7)
-                {
-                    Cursor.SetPosition(new(Cursor.Pos.X, Cursor.Pos.Y + 1));
-                }
-                break;
-
-            case ConsoleKey.LeftArrow:
-            case ConsoleKey.A:
+            case InputMap.Left:
                 if (Cursor.Pos.X > 0)
                 {
                     Cursor.SetPosition(new(Cursor.Pos.X - 1, Cursor.Pos.Y));
                 }
                 break;
 
-            case ConsoleKey.RightArrow:
-            case ConsoleKey.D:
+            case InputMap.Down:
+                if (Cursor.Pos.Y < 7)
+                {
+                    Cursor.SetPosition(new(Cursor.Pos.X, Cursor.Pos.Y + 1));
+                }
+                break;
+
+            case InputMap.Right:
                 if (Cursor.Pos.X < 7)
                 {
                     Cursor.SetPosition(new(Cursor.Pos.X + 1, Cursor.Pos.Y));
                 }
                 break;
 
-            case ConsoleKey.Spacebar:
-            case ConsoleKey.Enter:
+            case InputMap.Interact:
                 Cursor.SetPosition(new(Cursor.Pos.X, Cursor.Pos.Y));
                 var interactedObject = BoardObjects[Cursor.Pos.Y, Cursor.Pos.X];
                 SquareInteractionEvent?.Invoke(interactedObject);
                 break;
 
-            case ConsoleKey.R:
-                RedrawBoardEvent?.Invoke();
-                break;
-
             default:
-                break;
+            break;
         }
+    }
+
+    public override void Finish()
+    {
+        Input.InputAction -= InputAction;
     }
 }

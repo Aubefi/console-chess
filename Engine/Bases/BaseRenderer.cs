@@ -4,4 +4,9 @@ public abstract class BaseRenderer : BaseBehavior
 {
     protected virtual bool IsFirstRender { get; set; } = true;
     protected abstract void FirstRender();
+
+    public BaseRenderer()
+    {
+        Input.RedrawScene += FirstRender;
+    }
 }

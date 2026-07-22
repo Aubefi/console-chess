@@ -4,7 +4,7 @@ namespace Chess.Engine;
 
 public enum InputMap
 {
-    Left, Up, Down, Right, Interact
+    Left, Up, Down, Right, Interact, Escape
 }
 
 public static class Input
@@ -41,6 +41,10 @@ public static class Input
             case ConsoleKey.Spacebar:
             case ConsoleKey.Enter:
                 InputAction?.Invoke(InputMap.Interact);
+                break;
+
+            case ConsoleKey.Escape:
+                InputAction?.Invoke(InputMap.Escape);
                 break;
 
             case ConsoleKey.R:

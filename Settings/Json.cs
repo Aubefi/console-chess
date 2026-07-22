@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace Chess.Engine.Localization;
 
-public static class Json
+public sealed class Json
 {
     public static TClass? OpenFile<TClass>(string folderName, string fileName) where TClass : class
     {

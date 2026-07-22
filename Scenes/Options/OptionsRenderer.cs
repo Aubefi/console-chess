@@ -5,11 +5,11 @@ using Chess.Settings;
 
 namespace Chess.Scenes.Gameplay;
 
-public sealed class TitleRenderer : BaseRenderer
+public sealed class OptionsRenderer : BaseRenderer
 {
-    public TitleCursor Cursor { get; set; } = null!;
+    public OptionsCursor Cursor { get; set; } = null!;
 
-    private List<string> _lines = Locale.StringTable["Title"];
+    private List<string> _lines = Locale.StringTable["Options"];
 
     public override void Start()
     {
@@ -22,7 +22,8 @@ public sealed class TitleRenderer : BaseRenderer
 
     private void OnCurrentLanguageChanged()
     {
-        _lines = Locale.StringTable["Title"];
+        _lines = Locale.StringTable["Options"];
+        FirstRender();
     }
 
     public override void Update()

@@ -21,7 +21,7 @@ public sealed class Tree
     };
 
     public static BaseScene CurrentScene { get; private set; } = Scenes["Title"];
-    public static void SetCurrentScene(BaseScene scene)
+    public static void ChangeSceneTo(BaseScene scene)
     {
         CurrentScene = scene;
         CurrentSceneChanged?.Invoke(CurrentScene);

@@ -3,7 +3,7 @@ using Chess.Engine.Bases;
 
 namespace Chess.Scenes.Gameplay;
 
-public sealed class TitleCursor : BaseCursor
+public sealed class OptionsCursor : BaseCursor
 {
     public override Position Pos
     {
@@ -23,7 +23,7 @@ public sealed class TitleCursor : BaseCursor
         set => field = value - 1;
     } = 0;
 
-    public TitleCursor(char symbol, ConsoleColor color, int x, int y) : base(symbol, color, x, y)
+    public OptionsCursor(char symbol, ConsoleColor color, int x, int y) : base(symbol, color, x, y)
     {
         Pos = new(x, y);
         LastPosition = Pos;

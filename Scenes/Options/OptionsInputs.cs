@@ -1,11 +1,12 @@
 using Chess.Engine;
 using Chess.Engine.Bases;
+using Chess.Settings;
 
 namespace Chess.Scenes.Gameplay;
 
-public sealed class TitleInputs : BaseBehavior
+public sealed class OptionsInputs : BaseBehavior
 {
-    public TitleCursor Cursor { get; set; } = null!;
+    public OptionsCursor Cursor { get; set; } = null!;
 
     public override void Start()
     {
@@ -31,27 +32,18 @@ public sealed class TitleInputs : BaseBehavior
                 break;
 
             case InputMap.Interact:
-                ChangeScene();
+                if (Cursor.Pos.Y == 1)
+                {
+                    Locale.SwapLanguage();
+                }
+                break;
+
+            case InputMap.Escape:
+                Tree.ChangeSceneTo(Tree.Scenes["Title"]);
                 break;
 
             default:
             break;
-        }
-    }
-
-    private void ChangeScene()
-    {
-        var newScene = Cursor.Pos.Y switch
-        {
-            0 => Tree.Scenes["Gameplay"],
-            1 => Tree.Scenes["Options"],
-            2 => Tree.Scenes["Exit"],
-            _ => null
-        };
-
-        if (newScene is not null)
-        {
-            Tree.ChangeSceneTo(newScene);
         }
     }
 

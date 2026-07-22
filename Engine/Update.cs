@@ -25,7 +25,10 @@ public sealed class Update : BaseState
                 {
                     break;
                 }
+            }
 
+            if (_exitCurrentSceneUpdate is false)
+            {
                 Input.ReadInput();
             }
         }

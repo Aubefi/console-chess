@@ -11,7 +11,7 @@ public sealed class GameplayInputs : BaseBehavior
 
     public static event Action<BaseUIObject>? SquareInteractionEvent;
 
-    public GameplayInputs()
+    public override void Start()
     {
         Input.InputAction += InputAction;
     }

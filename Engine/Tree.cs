@@ -20,14 +20,10 @@ public sealed class Tree
         ["Exit"] = new Exit()
     };
 
-    public static BaseScene CurrentScene
+    public static BaseScene CurrentScene { get; private set; } = Scenes["Title"];
+    public static void SetCurrentScene(BaseScene scene)
     {
-        get;
-        set
-        {
-            field = value;
-            CurrentSceneChanged?.Invoke(value);
-        }
-    } = Scenes["Gameplay"];
-
+        CurrentScene = scene;
+        CurrentSceneChanged?.Invoke(CurrentScene);
+    }
 }

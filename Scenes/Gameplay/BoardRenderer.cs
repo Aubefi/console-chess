@@ -16,9 +16,11 @@ public sealed class BoardRenderer : BaseRenderer
 
     public override void Start()
     {
+        base.Start();
+
         Array.Copy(BoardObjects, _lastBoardObjects, BoardObjects.Length);
 
-        base.Start();
+        IsFirstRender = true;
     }
 
     public override void Update()

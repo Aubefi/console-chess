@@ -4,5 +4,10 @@
     "Play",
     "Options",
     "Exit"
+  ],
+  "Options":
+  [
+    "Theme",
+    "Language"
   ]
 }

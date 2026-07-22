@@ -4,5 +4,10 @@
     "Jogar",
     "Opções",
     "Sair"
+  ],
+  "Options":
+  [
+    "Tema",
+    "Linguagem"
   ]
 }
